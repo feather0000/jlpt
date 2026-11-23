@@ -23,7 +23,7 @@ jobs:
           git -C "$RUNNER_TEMP/openjlpt" checkout --detach FETCH_HEAD
           curl --fail --silent --show-error --location --retry 2 --output "$RUNNER_TEMP/tomoshi.db.zst" https://github.com/tomoshi-app/tomoshi-dict-data/releases/download/v2026-11-16/tomoshi-dict-open.db.zst
           echo "793d26a8963bff8b4dc39e83190d6f1608449f25aa5a8b5f9163c44e8c39b684  $RUNNER_TEMP/tomoshi.db.zst" | sha256sum -c
-          zstd --decompress "$RUNNER_TEMP/tomoshi.db.zst" --output "$RUNNER_TEMP/tomoshi.db"
+          zstd --decompress "$RUNNER_TEMP/tomoshi.db.zst" -o "$RUNNER_TEMP/tomoshi.db"
       - name: Generate and verify the public dictionary
         run: |
           python3 import_dictionary.py --openjlpt "$RUNNER_TEMP/openjlpt" --tomoshi "$RUNNER_TEMP/tomoshi.db"
