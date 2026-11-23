@@ -28,6 +28,7 @@ jobs:
         run: |
           python3 import_dictionary.py --openjlpt "$RUNNER_TEMP/openjlpt" --tomoshi "$RUNNER_TEMP/tomoshi.db"
           python3 verify.py
+          sha256sum content/dictionary/n?.json
       - name: Commit the verified dictionary on the staging branch
         run: |
           git add content/dictionary dist
