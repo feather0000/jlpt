@@ -50,6 +50,8 @@ python3 verify.py
 
 ## 部署到 Cloudflare Pages
 
+Pages 地址：[feather0-jlpt.pages.dev](https://feather0-jlpt.pages.dev/)。
+
 仓库里已经提交了构建好的 `dist/`，Cloudflare 不需要运行构建。
 
 1. Cloudflare 控制台 → Workers & Pages → 创建 → Pages → 连接到 Git，选择这个仓库。
