@@ -559,6 +559,8 @@ def grammar_pattern(value):
 
 
 def gdict_page(levels, imported):
+    with open(os.path.join(ROOT, 'content', 'grammar-zh.json'), encoding='utf-8') as source:
+        translations = json.load(source)
     ents = []
     for lv in levels:
         ents.extend((gkey(g), lv, i, g) for i, g in enumerate(lv['grammar'], 1))
@@ -576,7 +578,15 @@ def gdict_page(levels, imported):
         exs = ''.join('<li><span lang="ja">%s</span><span class="ex-zh"%s>%s</span></li>' % (ruby(a), en, esc(b)) for a, b in g['ex'])
         note = '<p class="note"><b>%s</b>%s</p>' % (T('补充', '補足'), ruby(g['note'])) if g.get('note') else ''
         zh, ja = g.get('zh', ''), g.get('ja', '')
-        mean = T(esc(zh), esc(ja)) if i else meaning_markup(g['en'], 'en')
+        if i:
+            mean = T(esc(zh), esc(ja))
+        else:
+            gloss = translations.get(lv['id'], {}).get(g['id'], {})
+            if gloss.get('en') == g['en'] and gloss.get('zh'):
+                zh = gloss['zh']
+                mean = T(esc(zh), meaning_markup(g['en'], 'en'))
+            else:
+                mean = meaning_markup(g['en'], 'en')
         conn = T(esc(g['conn']), esc(conn_ja(g['conn']))) if i else meaning_markup(g['conn'], 'en')
         if i:
             href = '../%s/grammar/#g%d' % (lv['id'], i)

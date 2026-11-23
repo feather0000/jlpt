@@ -1,0 +1,2116 @@
+{
+  "n1": {
+    "gatera": {
+      "en": "while; on the way; taking the opportunity of",
+      "zh": "做某事时顺便……"
+    },
+    "katawara": {
+      "en": "while also; alongside (one's main occupation)",
+      "zh": "从事主要工作之余还……"
+    },
+    "ga-hayai-ka": {
+      "en": "the moment; no sooner ... than",
+      "zh": "刚一……就……"
+    },
+    "sura": {
+      "en": "even; not even (an extreme example)",
+      "zh": "甚至、连……都……"
+    },
+    "zukume": {
+      "en": "nothing but; entirely; one ... after another",
+      "zh": "尽是……、全都是……"
+    },
+    "tara-saigo-ga-saigo": {
+      "en": "once ... (there's no going back); if ever ..., that's the end",
+      "zh": "一旦……就无法挽回或停下来"
+    },
+    "te-kara-to-iu-mono": {
+      "en": "ever since",
+      "zh": "自从……以来一直……"
+    },
+    "te-yamanai": {
+      "en": "never cease to; sincerely; deeply (hope, respect, love)",
+      "zh": "由衷地……、一直……，用于希望、敬爱等情感"
+    },
+    "to-aimatte": {
+      "en": "combined with; coupled with",
+      "zh": "与……相结合，产生共同作用"
+    },
+    "tomo-naru-to-tomo-nareba": {
+      "en": "when it comes to; once (a certain level or stage) is reached",
+      "zh": "一到……阶段或达到……程度，就……"
+    },
+    "nara-de-wa": {
+      "en": "unique to; that only ... could offer",
+      "zh": "只有……才有的、……独有的"
+    },
+    "beku": {
+      "en": "in order to; with the aim of",
+      "zh": "为了……、意在……，较书面"
+    },
+    "you-mono-nara": {
+      "en": "if one were to (do), (something terrible would happen)",
+      "zh": "万一做了……，就会酿成严重后果"
+    },
+    "ni-itaru-ni-itatte-ni-itatte-wa": {
+      "en": "reach; lead to; only when it came to; as for (the most extreme case)",
+      "zh": "发展到……、直到……才；也可引出最极端的例子"
+    },
+    "o-kinjienai": {
+      "en": "cannot help feeling; cannot suppress (an emotion)",
+      "zh": "不禁感到……、难以抑制某种情绪"
+    },
+    "o-yogi-naku-sareru": {
+      "en": "be forced to; have no choice but to",
+      "zh": "被迫……、不得不……"
+    },
+    "atte-no": {
+      "en": "(only) possible because of; owe everything to",
+      "zh": "正因为有……才有……"
+    },
+    "ikan-de-ikan-ni-yorazu": {
+      "en": "depending on; regardless of",
+      "zh": "取决于……；或不问……如何"
+    },
+    "you-ga-you-to": {
+      "en": "no matter (what, how); even if",
+      "zh": "无论……、即使……"
+    },
+    "you-ga-mai-ga-you-to-mai-to": {
+      "en": "whether or not; regardless of whether",
+      "zh": "不管做还是不做……"
+    },
+    "you-ni-mo-nai": {
+      "en": "want to (do) but can't; even if one tries, one cannot",
+      "zh": "想……也做不到"
+    },
+    "kagiri-da": {
+      "en": "extremely; I feel so (emotion)",
+      "zh": "感到极其……，用于强调情绪"
+    },
+    "katagata": {
+      "en": "while also; partly for the purpose of",
+      "zh": "兼做……、顺便为了……，较正式"
+    },
+    "ka-to-omoikiya": {
+      "en": "just when one thought ...; contrary to expectation",
+      "zh": "本以为……，没想到却……"
+    },
+    "kirai-ga-aru": {
+      "en": "have a (bad) tendency to",
+      "zh": "有……的倾向，通常是缺点"
+    },
+    "kiwamaru-kiwamari-nai": {
+      "en": "extremely; utterly",
+      "zh": "极其……、……到了极点"
+    },
+    "no-kiwami": {
+      "en": "the height of; the utmost",
+      "zh": "……之极、极度……"
+    },
+    "gotoki-gotoku": {
+      "en": "like; as; (after a person) the likes of",
+      "zh": "如同……、像……一样；用于人时也可表轻视"
+    },
+    "koto-tote": {
+      "en": "because; since (as an excuse or apology)",
+      "zh": "因为……，常用于解释或致歉"
+    },
+    "koto-nashi-ni": {
+      "en": "without (doing)",
+      "zh": "不做……就……、没有经过……"
+    },
+    "shimatsu-da": {
+      "en": "end up (in a bad state); (things) have come to this",
+      "zh": "竟落到……的地步，通常是坏结果"
+    },
+    "zu-jimai": {
+      "en": "end up never doing; never got around to",
+      "zh": "结果一直没能做……"
+    },
+    "zu-ni-wa-okanai-nai-de-wa-okanai": {
+      "en": "will definitely (do); cannot fail to (cause a reaction)",
+      "zh": "一定会……；也可表示必然引起某种反应"
+    },
+    "zu-ni-wa-sumanai-nai-de-wa-sumanai": {
+      "en": "must (do); won't get away without (doing)",
+      "zh": "非做……不可，不能不承担后果或责任"
+    },
+    "soba-kara": {
+      "en": "as soon as (and again and again)",
+      "zh": "刚一……就又……，常表示反复发生"
+    },
+    "tari-tomo": {
+      "en": "not even (one); not a single",
+      "zh": "连一个……也不……"
+    },
+    "dani": {
+      "en": "even (just); not even",
+      "zh": "连……都……，或连想一想也……"
+    },
+    "taru": {
+      "en": "as (one in the position of); befitting",
+      "zh": "作为……身份的人、身为……"
+    },
+    "tsu-tsu": {
+      "en": "(doing) A and B alternately; back and forth",
+      "zh": "一会儿……一会儿……，两个动作交替"
+    },
+    "de-are-de-are-de-are": {
+      "en": "whatever (it is); whoever; whether A or B",
+      "zh": "无论是什么或是谁；无论是甲还是乙"
+    },
+    "te-shikaru-beki-da": {
+      "en": "ought to; it would only be natural to",
+      "zh": "理应……、按理就该……"
+    },
+    "de-wa-aru-mai-shi": {
+      "en": "it's not as if (one were); since (one) is not",
+      "zh": "又不是……，常用于反驳或劝告"
+    },
+    "temae": {
+      "en": "since (considering how it looks to others); out of consideration for",
+      "zh": "顾及他人看法或先前承诺，只好……"
+    },
+    "te-mo-sashitsukae-nai": {
+      "en": "it's all right to; there's no problem if",
+      "zh": "……也无妨、……也没有问题"
+    },
+    "to-atte": {
+      "en": "because (of a special situation); as it is",
+      "zh": "由于碰上……这种特殊情况"
+    },
+    "to-areba": {
+      "en": "if it's (for); if (such a special case) is so",
+      "zh": "如果是……这种情况，或如果是为……"
+    },
+    "to-ii-to-ii": {
+      "en": "both A and B; in terms of A as well as B",
+      "zh": "无论从甲还是从乙来看，都是……"
+    },
+    "to-itta-tokoro-da": {
+      "en": "at most; about; more or less",
+      "zh": "充其量……、大概在……这个程度"
+    },
+    "to-iedomo": {
+      "en": "even though; even (someone like)",
+      "zh": "即便是……也……、虽说……却……"
+    },
+    "to-ittara-nai": {
+      "en": "indescribably; extremely; beyond words",
+      "zh": "极其……、难以形容地……"
+    },
+    "to-kitara": {
+      "en": "when it comes to; as for (complaint)",
+      "zh": "说起……来，常含抱怨"
+    },
+    "to-shita-tokoro-de-ni-shita-tokoro-de": {
+      "en": "even if; even supposing; even for (someone)",
+      "zh": "即便假设……也……；即便对某人来说也……"
+    },
+    "to-wa": {
+      "en": "(to think) that ...!; I'm surprised that",
+      "zh": "居然……，表示惊讶"
+    },
+    "to-bakari-ni": {
+      "en": "as if to say",
+      "zh": "仿佛在说……似的"
+    },
+    "to-mo-naku-to-mo-nashi-ni": {
+      "en": "without meaning to; idly; (with question words) no particular",
+      "zh": "无意中……、没特意……；与疑问词连用表示不确定"
+    },
+    "nai-made-mo": {
+      "en": "even if not (to that extent), at least",
+      "zh": "即使做不到……的程度，至少可以……"
+    },
+    "nai-mono-de-mo-nai": {
+      "en": "it's not impossible that; might (under some conditions)",
+      "zh": "并非完全不可能，在特定条件下也许可以"
+    },
+    "nagara-ni-nagara-no": {
+      "en": "as (it was); while remaining; since (birth)",
+      "zh": "保持原状或原有身份、与生俱来"
+    },
+    "nakushite-wa": {
+      "en": "without (something essential), (cannot)",
+      "zh": "没有……就无法……，强调不可缺少的条件"
+    },
+    "nashi-ni-wa": {
+      "en": "without",
+      "zh": "没有……就……、未经……"
+    },
+    "nara-iza-shirazu-wa-iza-shirazu": {
+      "en": "it may be different for ..., but; I don't know about ..., but",
+      "zh": "若是……或许另当别论，但……"
+    },
+    "nara-mada-shimo": {
+      "en": "if it were ..., it would be one thing (but)",
+      "zh": "如果是……倒还罢了，可是……"
+    },
+    "nari": {
+      "en": "as soon as; the moment",
+      "zh": "刚一……就……"
+    },
+    "nari-nari": {
+      "en": "either A or B; A or B or whatever",
+      "zh": "……也好，……也行，列举可选做法"
+    },
+    "nari-ni-nari-no": {
+      "en": "in one's own way; as far as (one's limits) allow",
+      "zh": "按自己的方式或能力所及去做"
+    },
+    "ni-wa-ataranai": {
+      "en": "there's no need to; it's not worth (being surprised, etc.)",
+      "zh": "没有必要……、不值得为此……"
+    },
+    "ni-atte": {
+      "en": "in (a situation or position); at (a time)",
+      "zh": "处在……情况下、在……时期"
+    },
+    "ni-kataku-nai": {
+      "en": "it's not hard to (imagine, understand)",
+      "zh": "不难想象或理解……"
+    },
+    "ni-shite": {
+      "en": "only (at/with); even for; being both A and B",
+      "zh": "直到……才、连……也；或同时具备甲和乙"
+    },
+    "ni-sokushite": {
+      "en": "in accordance with; based on (the facts, actual conditions)",
+      "zh": "依据实际情况或事实、切合……"
+    },
+    "ni-taeru-ni-taenai": {
+      "en": "be worth (doing); unbearable to (see, hear); (feel) deeply",
+      "zh": "值得……；不忍听看，或深切感到……"
+    },
+    "ni-taru": {
+      "en": "worthy of; sufficient to",
+      "zh": "值得……、足以……"
+    },
+    "ni-todomarazu": {
+      "en": "not limited to; not stopping at; going beyond",
+      "zh": "不限于……、超出……的范围"
+    },
+    "ni-hikikae": {
+      "en": "in contrast to; unlike",
+      "zh": "与……截然不同、相比之下……"
+    },
+    "ni-mo-mashite": {
+      "en": "even more than; above all",
+      "zh": "比……更加……"
+    },
+    "no-itari": {
+      "en": "utmost; the height of (in set phrases)",
+      "zh": "……到了极点，多用于固定表达"
+    },
+    "nomi-narazu": {
+      "en": "not only ... but also",
+      "zh": "不仅……而且……"
+    },
+    "wa-oroka": {
+      "en": "let alone; not to mention",
+      "zh": "别说……，就连……也……"
+    },
+    "ba-koso": {
+      "en": "precisely because; only because",
+      "zh": "正因为……才……"
+    },
+    "ba-sore-made-da": {
+      "en": "if ..., that's the end of it; it's all for nothing if",
+      "zh": "如果……，一切就到此为止或前功尽弃"
+    },
+    "bekarazu-bekarazaru": {
+      "en": "must not; do not (on signs); (before a noun) must not be",
+      "zh": "严禁……、不得……，常见于告示或书面语"
+    },
+    "beku-mo-nai": {
+      "en": "cannot possibly; there's no way to",
+      "zh": "根本不可能……、无从……"
+    },
+    "majiki": {
+      "en": "unacceptable for (someone in that position); should not",
+      "zh": "这种身份的人不应有的、不可容忍的"
+    },
+    "made-mo-nai": {
+      "en": "needless to; there's no need to (go as far as)",
+      "zh": "无需特意……、用不着……"
+    },
+    "made-da-made-no-koto-da": {
+      "en": "(I'll) just (do); I merely (did)",
+      "zh": "到时就……而已；或表示所做的仅此而已"
+    },
+    "mamire": {
+      "en": "covered in; smeared with",
+      "zh": "沾满……、满身都是……"
+    },
+    "meku": {
+      "en": "show signs of; become like; -ish",
+      "zh": "显出……的气息、带上……色彩"
+    },
+    "mo-saru-koto-nagara": {
+      "en": "not only ... but also (even more); ... aside",
+      "zh": "……固然……，但……更值得一提"
+    },
+    "mono-o": {
+      "en": "if only (..., but); although (regret or reproach)",
+      "zh": "要是……就好了却……，带遗憾或责备"
+    },
+    "ya-ina-ya": {
+      "en": "as soon as; the moment; no sooner ... than",
+      "zh": "一……就立刻……"
+    },
+    "yue-ni": {
+      "en": "because of; due to; therefore",
+      "zh": "因为……、由于……，较书面"
+    },
+    "o-oite": {
+      "en": "other than; apart from (no one / nothing else)",
+      "zh": "除了……之外别无其他"
+    },
+    "o-kawakiri-ni": {
+      "en": "starting with; beginning with (followed by a series)",
+      "zh": "以……打头，随后陆续展开"
+    },
+    "o-ki-ni": {
+      "en": "taking the opportunity of; with (an event) as a turning point",
+      "zh": "以……为契机或转折点"
+    },
+    "o-kagiri-ni": {
+      "en": "as of (and no longer); for the last time; at the top of (one's voice)",
+      "zh": "以……为截止、这是最后一次；也可表示用尽全力发声"
+    },
+    "o-motte": {
+      "en": "with; by means of; as of (a time)",
+      "zh": "凭借……、通过……；也可表示从某时起生效或截止"
+    },
+    "o-mono-tomo-sezu": {
+      "en": "in defiance of; undaunted by",
+      "zh": "不畏……、不把困难放在眼里"
+    },
+    "o-yoso-ni": {
+      "en": "ignoring; paying no heed to; oblivious to",
+      "zh": "不顾……、对……置之不理"
+    },
+    "n-ga-tame-ni": {
+      "en": "in order to; for the sake of (strong resolve)",
+      "zh": "为了……，常带强烈的目的或决心"
+    },
+    "n-bakari": {
+      "en": "as if about to; almost (to the point of)",
+      "zh": "几乎要……、仿佛马上就会……"
+    },
+    "ue-wa": {
+      "en": "now that; since (one must)",
+      "zh": "既然已经……，就必须……"
+    },
+    "tada-nomi": {
+      "en": "only; just; nothing but",
+      "zh": "只是……、仅仅……"
+    },
+    "dano-dano": {
+      "en": "things like A and B (complaining list)",
+      "zh": "什么……啦、……啦，常带抱怨"
+    },
+    "te-habakaranai": {
+      "en": "not hesitate to; openly (say, declare)",
+      "zh": "毫不避讳地做或公开说……"
+    },
+    "tomo-arou": {
+      "en": "of all people; someone (of such standing) as",
+      "zh": "堂堂……竟然……，常带意外或责备"
+    },
+    "ni-kakotsukete": {
+      "en": "using (something) as an excuse or pretext",
+      "zh": "以……为借口或由头"
+    },
+    "ni-iwasereba": {
+      "en": "if you ask (someone); in (someone's) opinion",
+      "zh": "照某人的说法、在某人看来"
+    },
+    "ni-kamakete": {
+      "en": "being too wrapped up in (to attend to other things)",
+      "zh": "只顾着……，顾不上别的事"
+    },
+    "kai-mo-naku": {
+      "en": "despite (efforts); to no avail",
+      "zh": "虽付出努力却没有成效"
+    },
+    "kitte-no": {
+      "en": "the most ... in; the best in",
+      "zh": "……之中最……、首屈一指的"
+    },
+    "zu-tomo": {
+      "en": "even without; without having to",
+      "zh": "即使不做……也……、无须……"
+    },
+    "to-wa-ie": {
+      "en": "although; even though; that said",
+      "zh": "虽说……，可是……"
+    },
+    "beku-shite": {
+      "en": "as was bound to happen; inevitably",
+      "zh": "注定会……，事情按其必然趋势发生"
+    },
+    "jimiru-jimita": {
+      "en": "smack of; seem like (in a bad way); -ish",
+      "zh": "带有……的不良色彩、显得像……"
+    },
+    "gurumi": {
+      "en": "including all; the whole (group) together",
+      "zh": "连同整个群体一起、包括……在内"
+    },
+    "ni-mo-hodo-ga-aru": {
+      "en": "there's a limit to; too ... (beyond what's acceptable)",
+      "zh": "……也该有个限度，已经过头了"
+    },
+    "o-ii-koto-ni": {
+      "en": "taking (unfair) advantage of; using (a situation) as license to",
+      "zh": "利用……这个便利条件来占便宜或为所欲为"
+    },
+    "ni-nottotte": {
+      "en": "in accordance with (rules, law, tradition)",
+      "zh": "按照……规定、法律或传统"
+    },
+    "kare-kare": {
+      "en": "whether A or B; A or B alike (fixed pairs)",
+      "zh": "无论……还是……，多用于固定搭配"
+    },
+    "koto-kono-ue-nai": {
+      "en": "extremely; nothing could be more",
+      "zh": "再……不过、极其……"
+    },
+    "to-mieru-to-miete": {
+      "en": "it seems (judging from evidence); apparently",
+      "zh": "从迹象看来似乎……"
+    },
+    "o-fumaete": {
+      "en": "based on; taking into account; in light of",
+      "zh": "以……为依据、将……纳入考虑"
+    },
+    "nai-to-mo-kagiranai": {
+      "en": "it's not impossible that; there's a chance that",
+      "zh": "也有可能……、不能排除这种可能"
+    }
+  },
+  "n2": {
+    "ni-saishite": {
+      "en": "on the occasion of; when; at the time of",
+      "zh": "在……之际、当……的时候"
+    },
+    "ni-tomonatte": {
+      "en": "along with; as; accompanying",
+      "zh": "伴随……、随着……"
+    },
+    "ni-oujite": {
+      "en": "according to; depending on; in response to",
+      "zh": "根据……调整、应……而变"
+    },
+    "ni-hanshite": {
+      "en": "contrary to; against; in violation of",
+      "zh": "与……相反、违背……"
+    },
+    "ni-motozuite": {
+      "en": "based on; on the basis of",
+      "zh": "基于……、根据……"
+    },
+    "ni-watatte": {
+      "en": "over; throughout; spanning (a whole period or area)",
+      "zh": "长达……、遍及……，覆盖整个时段或区域"
+    },
+    "ni-sotte": {
+      "en": "along; in line with; following",
+      "zh": "沿着……、遵循……"
+    },
+    "ni-kuwaete": {
+      "en": "in addition to; on top of",
+      "zh": "除……之外还……"
+    },
+    "o-megutte": {
+      "en": "over; concerning; surrounding (an issue of dispute)",
+      "zh": "围绕……，多指有争议的问题"
+    },
+    "o-tsuujite-o-tooshite": {
+      "en": "through; via; by way of; throughout (a period)",
+      "zh": "通过……、经由……；也可表示贯穿整个期间"
+    },
+    "o-kikkake-ni": {
+      "en": "taking the opportunity of; triggered by; with ... as the start",
+      "zh": "以……为契机、由……触发"
+    },
+    "o-nozoite": {
+      "en": "except; excluding; apart from",
+      "zh": "除了……之外、不包括……"
+    },
+    "ka-no-you-da": {
+      "en": "as if; as though (when it isn't really so)",
+      "zh": "仿佛……似的，实际并非如此"
+    },
+    "kanenai": {
+      "en": "could well; might (lead to something bad)",
+      "zh": "可能会……，通常指不好的结果"
+    },
+    "kaneru": {
+      "en": "cannot; be unable to (polite refusal); find it hard to",
+      "zh": "难以……、无法……，常用于委婉拒绝"
+    },
+    "zu-ni-wa-irarenai": {
+      "en": "can't help doing; can't resist doing",
+      "zh": "忍不住做……、实在无法克制"
+    },
+    "zaru-o-enai": {
+      "en": "have no choice but to; cannot help but",
+      "zh": "迫不得已做……"
+    },
+    "te-wa-irarenai": {
+      "en": "can't afford to (keep) doing; can't just",
+      "zh": "不能再继续……、顾不上再……"
+    },
+    "mono-ka": {
+      "en": "no way (will I); as if; I'll never",
+      "zh": "怎么会……、绝不会……，表示强烈反问或否定"
+    },
+    "mono-no": {
+      "en": "although; even though (but the expected result doesn't follow)",
+      "zh": "虽然……却没有出现预期结果"
+    },
+    "mono-nara": {
+      "en": "if (it were possible); if only one could",
+      "zh": "如果真能……的话；要是能……就好了"
+    },
+    "kurai-nara-gurai-nara": {
+      "en": "rather than; if it comes to (doing that), I'd rather",
+      "zh": "与其……，宁可……"
+    },
+    "mono-ga-aru": {
+      "en": "there is something (about it that is) ...; it really is",
+      "zh": "确实有让人感到……的地方"
+    },
+    "koto-ka": {
+      "en": "how ...!; how much ...!",
+      "zh": "多么……啊，强调感受或程度"
+    },
+    "koto-ni-wa": {
+      "en": "(emotion)-ly; what is (surprising, sad, etc.) is that",
+      "zh": "令人……的是……"
+    },
+    "koto-dakara": {
+      "en": "knowing (someone); since it's (someone), surely",
+      "zh": "就是因为了解某人，才料想他会……"
+    },
+    "koto-naku": {
+      "en": "without (doing); without ever",
+      "zh": "没有做……就……；始终未曾……"
+    },
+    "koto-kara": {
+      "en": "from the fact that; because; judging from",
+      "zh": "由于……这一事实，或由此推断……"
+    },
+    "nai-koto-ni-wa": {
+      "en": "unless; if ... not (then it can't happen)",
+      "zh": "如果不先……，就无法……"
+    },
+    "koto-wa-ga": {
+      "en": "it's true that ..., but; (I) do ..., but",
+      "zh": "……倒是……，不过……，先承认再转折"
+    },
+    "ageku": {
+      "en": "after (a long, troublesome process); in the end",
+      "zh": "折腾了很久，最后却……"
+    },
+    "amari-ni": {
+      "en": "so much that; out of excessive; because of too much",
+      "zh": "因为过于……而……"
+    },
+    "ue-ni": {
+      "en": "besides; on top of; in addition to",
+      "zh": "不但……而且……"
+    },
+    "ue-de": {
+      "en": "after (doing), upon; in (doing), when it comes to",
+      "zh": "做完……之后再……；也可表示在做……时"
+    },
+    "ijou-wa": {
+      "en": "since; now that; as long as",
+      "zh": "既然……，就应当……"
+    },
+    "kara-ni-wa": {
+      "en": "now that; since (having done/being ..., one must)",
+      "zh": "既然已经……，就必须……"
+    },
+    "kara-koso": {
+      "en": "precisely because; it is because ... that",
+      "zh": "正因为……，才……"
+    },
+    "kara-shite": {
+      "en": "judging from; (starting) even with; to begin with",
+      "zh": "单从……就能判断；或光是……就已经……"
+    },
+    "kara-suru-to-kara-sureba": {
+      "en": "judging from; from the standpoint of",
+      "zh": "从……的角度或迹象来判断"
+    },
+    "kara-miru-to-kara-mireba": {
+      "en": "from the point of view of; judging from; seen from",
+      "zh": "站在……的立场来看；从……可以看出"
+    },
+    "kara-iu-to-kara-itte": {
+      "en": "in terms of; from the standpoint of; judging by",
+      "zh": "就……而言，或从……来判断"
+    },
+    "sai-ni": {
+      "en": "when; at the time of; on the occasion of",
+      "zh": "当……时、在……之际"
+    },
+    "shidai": {
+      "en": "as soon as (then immediately)",
+      "zh": "一……就马上……"
+    },
+    "shidai-da-shidai-de": {
+      "en": "depending on; it depends on",
+      "zh": "取决于……，视……而定"
+    },
+    "sue-ni": {
+      "en": "after (a long process of); finally, at the end of",
+      "zh": "经过长时间的过程后，最终……"
+    },
+    "ta-tokoro-de": {
+      "en": "even if (it would be no use); no matter how much",
+      "zh": "即使……也没有用"
+    },
+    "ta-tokoro": {
+      "en": "when (I) did ..., (I found that); upon doing",
+      "zh": "做了……之后，发现或得到……"
+    },
+    "bakari-ka": {
+      "en": "not only ... but also",
+      "zh": "不但……甚至还……"
+    },
+    "bakari-ni": {
+      "en": "simply because; just because (with a bad result)",
+      "zh": "就因为……才造成了坏结果"
+    },
+    "bakari-da": {
+      "en": "keep (getting worse); only continue to",
+      "zh": "一直朝同一方向变化，常指进一步恶化"
+    },
+    "wa-mochiron-wa-motoyori": {
+      "en": "not to mention; of course ... and also",
+      "zh": "……自不必说，连……也……"
+    },
+    "wa-tomokaku": {
+      "en": "setting aside; regardless of; whatever about",
+      "zh": "姑且不论……、无论……怎么样"
+    },
+    "wa-sateoki": {
+      "en": "leaving aside; putting aside (for now)",
+      "zh": "暂且把……放在一边"
+    },
+    "hanmen": {
+      "en": "on the other hand; while (it is ...)",
+      "zh": "另一方面……，表示同一事物的另一面"
+    },
+    "nagara-mo": {
+      "en": "although; despite; while (contrary to expectation)",
+      "zh": "虽然……却……，与通常预期相反"
+    },
+    "tsutsu-tsutsu-mo": {
+      "en": "while (doing); although, even while",
+      "zh": "一边……一边……；也可表示明知如此却……"
+    },
+    "tsutsu-aru": {
+      "en": "be in the process of; be gradually (changing)",
+      "zh": "正在逐渐……、处于变化过程中"
+    },
+    "ppanashi": {
+      "en": "leaving (something) as is; keep (doing) without a break",
+      "zh": "做了之后不管，或一直不停地做"
+    },
+    "nuku": {
+      "en": "do to the very end; see through; do thoroughly",
+      "zh": "坚持做到底、彻底完成"
+    },
+    "uru-enai": {
+      "en": "can; be possible / cannot; be impossible",
+      "zh": "有可能……；不可能……"
+    },
+    "gatai": {
+      "en": "hard to; almost impossible to (emotionally)",
+      "zh": "很难……，尤其指心理上难以接受或相信"
+    },
+    "you-ga-nai": {
+      "en": "there's no way to; cannot possibly (no means available)",
+      "zh": "没有办法……，缺少可用的手段"
+    },
+    "you-de-wa": {
+      "en": "if (you are like this / keep doing this), (it's no good)",
+      "zh": "如果一直这样……，后果会不妙"
+    },
+    "te-naranai": {
+      "en": "can't help (feeling); feel terribly; extremely",
+      "zh": "……得不得了、实在忍不住感到……"
+    },
+    "te-koso": {
+      "en": "only by (doing); only when",
+      "zh": "只有做了……才……"
+    },
+    "te-kara-de-nai-to": {
+      "en": "not until (after doing); only after",
+      "zh": "不先做完……，就不能……"
+    },
+    "te-irai": {
+      "en": "ever since",
+      "zh": "自从……以后一直……"
+    },
+    "ni-suginai": {
+      "en": "merely; nothing more than; only",
+      "zh": "不过是……、仅仅是……"
+    },
+    "ni-kagiru": {
+      "en": "nothing beats; the best thing is",
+      "zh": "……最好、没有比……更好的"
+    },
+    "ni-kagirazu": {
+      "en": "not only; not limited to",
+      "zh": "不限于……、不光是……"
+    },
+    "ni-kagitte": {
+      "en": "of all (times/people); precisely when; (someone) of all people wouldn't",
+      "zh": "偏偏……；也可表示“唯独那个人不会……”"
+    },
+    "ni-kagiri": {
+      "en": "limited to; only (for)",
+      "zh": "仅限……、只对……适用"
+    },
+    "kagiri": {
+      "en": "as long as; as far as (to the limit of)",
+      "zh": "只要……；也可表示在所知或所能的范围内"
+    },
+    "nai-kagiri": {
+      "en": "unless; as long as ... not",
+      "zh": "除非……；只要不……就……"
+    },
+    "ni-kakete-wa": {
+      "en": "when it comes to; in terms of (skill)",
+      "zh": "说到某项能力或本领"
+    },
+    "ni-kotaete": {
+      "en": "in response to; meeting (expectations, requests)",
+      "zh": "回应……、满足……的期望或请求"
+    },
+    "ni-sakidatte": {
+      "en": "prior to; before",
+      "zh": "在……之前，先于……"
+    },
+    "ni-shiro-ni-seyo": {
+      "en": "even if; whether ... or ...; in any case",
+      "zh": "即使……；也可表示不论是……还是……"
+    },
+    "ni-sureba-ni-shitara": {
+      "en": "from the standpoint of; for (someone), (it would seem)",
+      "zh": "站在……的立场来看"
+    },
+    "ni-soui-nai": {
+      "en": "without doubt; must be; surely",
+      "zh": "毫无疑问是……"
+    },
+    "ni-koshita-koto-wa-nai": {
+      "en": "it's best to; nothing is better than",
+      "zh": "最好……、……再好不过"
+    },
+    "ni-hoka-naranai": {
+      "en": "nothing other than; none other than; precisely",
+      "zh": "正是……、无非就是……"
+    },
+    "ni-mo-kakawarazu": {
+      "en": "despite; in spite of; although",
+      "zh": "尽管……却……"
+    },
+    "ni-atatte": {
+      "en": "when; at the time of; on the occasion of (starting something important)",
+      "zh": "在开始重要事项之际、值此……"
+    },
+    "ni-oite-ni-okeru": {
+      "en": "in; at; in the field of (formal)",
+      "zh": "在……、于……、在……领域，较正式"
+    },
+    "ni-kakawarazu": {
+      "en": "regardless of; irrespective of",
+      "zh": "不论……、与……无关"
+    },
+    "ni-kakawaru": {
+      "en": "affecting; concerning (something important); relating to",
+      "zh": "关系到……、影响到重要事物"
+    },
+    "ni-tsuki": {
+      "en": "per; for each; due to (in formal notices)",
+      "zh": "每……、按每……计算；正式通知中也可表示“由于……”"
+    },
+    "ni-mukete": {
+      "en": "toward; aimed at; in preparation for; addressed to",
+      "zh": "朝向……、为……做准备、面向……"
+    },
+    "no-moto-de-no-moto-ni": {
+      "en": "under (guidance, influence, a rule); with",
+      "zh": "在……的指导、影响或规则之下"
+    },
+    "nuki-de-nuki-ni": {
+      "en": "without; leaving out",
+      "zh": "不带……、省去……"
+    },
+    "o-komete": {
+      "en": "with (feeling); full of; putting ... into",
+      "zh": "带着……的感情，或把感情倾注其中"
+    },
+    "o-chuushin-ni": {
+      "en": "centered on; focusing on; mainly",
+      "zh": "以……为中心、主要围绕……"
+    },
+    "o-moto-ni": {
+      "en": "based on; using ... as a basis or source",
+      "zh": "以……为依据或素材"
+    },
+    "o-towazu": {
+      "en": "regardless of; irrespective of",
+      "zh": "不论……、不分……"
+    },
+    "o-hajime": {
+      "en": "starting with; including; such as (a representative example)",
+      "zh": "以……为代表，连同其他同类事物"
+    },
+    "o-to-shite": {
+      "en": "treating (A) as (B); with A as B",
+      "zh": "把甲当作乙、以甲为乙"
+    },
+    "ka-to-iu-to": {
+      "en": "if you ask whether (actually, not); the reason why ... is",
+      "zh": "要说是否……；也可引出对“为什么”的解释"
+    },
+    "ka-to-omottara-ka-to-omou-to": {
+      "en": "just when; no sooner than; the moment",
+      "zh": "刚以为……，马上却……"
+    },
+    "ka-nai-ka-no-uchi-ni": {
+      "en": "as soon as; barely ... when",
+      "zh": "几乎在……的同时，刚……就……"
+    },
+    "kiri": {
+      "en": "since (and nothing after); only; just",
+      "zh": "自从……后就没有再……；也可表示“仅仅”"
+    },
+    "ge": {
+      "en": "seeming; looking (as if); with an air of",
+      "zh": "看起来……、显得……"
+    },
+    "kko-nai": {
+      "en": "no way; there's absolutely no chance",
+      "zh": "绝不可能……，较口语"
+    },
+    "dokoro-ka": {
+      "en": "far from; let alone; on the contrary",
+      "zh": "别说……，反倒……；也可表示甚至超过预期"
+    },
+    "dokoro-de-wa-nai": {
+      "en": "this is no time for; out of the question",
+      "zh": "哪里顾得上……、根本谈不上……"
+    },
+    "to-wa-kagiranai": {
+      "en": "not necessarily; not always",
+      "zh": "未必……、不一定……"
+    },
+    "to-iu-mono-da": {
+      "en": "that's what (A) is; that's just how it is; that's really",
+      "zh": "这才叫……、本来就是这么回事"
+    },
+    "to-iu-mono-de-wa-nai": {
+      "en": "it's not (necessarily) the case that; it doesn't follow that",
+      "zh": "不能一概认为……、并不是说……就……"
+    },
+    "to-itte-mo": {
+      "en": "although I say; even though (it's called)",
+      "zh": "虽说是……，但实际程度或情况有别"
+    },
+    "to-ieba-to-iu-to": {
+      "en": "speaking of; when you think of; if you mention",
+      "zh": "说到……、一提起……"
+    },
+    "hoka-nai": {
+      "en": "have no choice but to; there's nothing to do but",
+      "zh": "别无选择，只能……"
+    },
+    "mai": {
+      "en": "will not (resolve); probably won't (conjecture)",
+      "zh": "决不……；也可表示推测，大概不会……"
+    },
+    "you-de-wa-nai-ka": {
+      "en": "let's (formal call to action); why don't we",
+      "zh": "让我们……吧，用于较正式的倡议"
+    },
+    "mo-kamawazu": {
+      "en": "without caring about; regardless of; paying no attention to",
+      "zh": "顾不上……、不管……"
+    },
+    "jou": {
+      "en": "from the standpoint of; in terms of; for reasons of",
+      "zh": "从……角度看、由于……方面的原因"
+    },
+    "osore-ga-aru": {
+      "en": "there is a risk that; could (bad outcome)",
+      "zh": "有发生坏结果的可能、恐怕会……"
+    },
+    "sei-ka": {
+      "en": "perhaps because; maybe due to",
+      "zh": "也许是因为……"
+    },
+    "dake-atte-dake-ni": {
+      "en": "as might be expected (since); precisely because; all the more because",
+      "zh": "不愧是……；也可表示正因为……才更……"
+    },
+    "dake-no-koto-wa-aru": {
+      "en": "it's no wonder; it lives up to; as expected of",
+      "zh": "果然名不虚传、不愧是……"
+    },
+    "tatoe-te-mo": {
+      "en": "even if; no matter",
+      "zh": "即使……也……"
+    },
+    "yara-yara": {
+      "en": "what with ... and ...; and ... and (among other things)",
+      "zh": "又是……又是……，列举多种情况"
+    },
+    "zu-ni-sumu-naide-sumu": {
+      "en": "get by without; not have to; be spared from",
+      "zh": "不用做……就能解决或过关"
+    },
+    "you-ni-yotte-wa": {
+      "en": "depending on how (one does it)",
+      "zh": "视采用什么做法而定"
+    }
+  },
+  "n3": {
+    "wake-da": {
+      "en": "no wonder; that's why; it follows that",
+      "zh": "原来如此、难怪；由此可知……"
+    },
+    "wake-de-wa-nai": {
+      "en": "it doesn't mean that; it's not that; not necessarily",
+      "zh": "并不是……，或不一定……"
+    },
+    "wake-ga-nai": {
+      "en": "there's no way that; cannot possibly",
+      "zh": "不可能……、绝不会……"
+    },
+    "wake-ni-wa-ikanai": {
+      "en": "can't afford to; can't very well; must not (for social or moral reasons)",
+      "zh": "碍于情理、责任等不能做某事"
+    },
+    "mono-da": {
+      "en": "it's natural that; one should; used to (nostalgia); how ...! (deep feeling)",
+      "zh": "本来就会……、理应……；也可表示怀念或感叹"
+    },
+    "mono-de-wa-nai": {
+      "en": "one shouldn't; it's not right to",
+      "zh": "不应当做……，表示训诫"
+    },
+    "mono-mon": {
+      "en": "because (casual excuse or self-justification)",
+      "zh": "因为嘛，口语中用于辩解"
+    },
+    "mono-dakara-mono-de": {
+      "en": "because; since (explaining or excusing a situation)",
+      "zh": "因为……，多用于说明缘由或辩解"
+    },
+    "koto-da": {
+      "en": "should; the best thing is to (advice)",
+      "zh": "应该……，用于给建议"
+    },
+    "koto-wa-nai": {
+      "en": "there's no need to; don't have to",
+      "zh": "没必要……、用不着……"
+    },
+    "koto-ni-shite-iru": {
+      "en": "make it a rule to; make a point of",
+      "zh": "自己规定要……，并一直照做"
+    },
+    "koto-ni-natte-iru": {
+      "en": "it has been arranged that; it's the rule that; be supposed to",
+      "zh": "按规定或事先安排应当……"
+    },
+    "koto-instruction": {
+      "en": "must; do (written rule or instruction)",
+      "zh": "必须……，多见于书面规定或指令"
+    },
+    "you-ni-iu-you-ni-tanomu": {
+      "en": "tell someone to do; ask someone to do (reported command or request)",
+      "zh": "转述命令或请求，即“叫某人……、请某人……”"
+    },
+    "you-to-suru": {
+      "en": "try to; attempt to; be about to",
+      "zh": "试图做……、正要做……"
+    },
+    "sou-ni-nai-sou-mo-nai": {
+      "en": "unlikely to; doesn't look like it will",
+      "zh": "看来不会……、似乎不可能……"
+    },
+    "ippou-da": {
+      "en": "keep on -ing; more and more (change in one direction)",
+      "zh": "不断……、越来越……，变化朝一个方向发展"
+    },
+    "ippou-de": {
+      "en": "while; on the other hand; at the same time",
+      "zh": "一方面……另一方面……；也可表示同时进行"
+    },
+    "ni-taishite": {
+      "en": "toward; against; in contrast to",
+      "zh": "对、针对；也可表示与另一方形成对照"
+    },
+    "ni-tsuite": {
+      "en": "about; concerning; regarding",
+      "zh": "关于、就……而言"
+    },
+    "ni-yotte-ni-yoru": {
+      "en": "by (agent); by means of; due to; depending on",
+      "zh": "由……、通过……、由于……、视……而定"
+    },
+    "ni-yoru-to-ni-yoreba": {
+      "en": "according to",
+      "zh": "据……所说、根据……"
+    },
+    "bakari-de-naku": {
+      "en": "not only ... but also",
+      "zh": "不但……而且……"
+    },
+    "dake-de-naku": {
+      "en": "not only ... but also",
+      "zh": "不仅……还……"
+    },
+    "mo-ba-mo": {
+      "en": "both ... and ...; not only ... but also",
+      "zh": "既……又……"
+    },
+    "rashii-typical-of": {
+      "en": "typical of; befitting; truly like",
+      "zh": "具有……典型特征，像个真正的……"
+    },
+    "ppoi": {
+      "en": "-ish; -like; tends to (casual)",
+      "zh": "有点像……、带有……特征，或容易……"
+    },
+    "teki": {
+      "en": "-ic; -al; in terms of",
+      "zh": "表示性质、倾向或看问题的角度"
+    },
+    "you-na-you-ni-like": {
+      "en": "like; as; such as",
+      "zh": "像……一样、如同……"
+    },
+    "marude-you-da": {
+      "en": "just like; as if",
+      "zh": "简直就像……一样"
+    },
+    "ni-chigai-nai": {
+      "en": "must be; surely; no doubt",
+      "zh": "一定是……、肯定是……"
+    },
+    "ni-kimatte-iru": {
+      "en": "certainly; is bound to; of course",
+      "zh": "肯定……、当然……"
+    },
+    "ki-ga-suru": {
+      "en": "have a feeling that; feel like",
+      "zh": "感觉好像……、总觉得……"
+    },
+    "zu-ni": {
+      "en": "without doing",
+      "zh": "没做……就……"
+    },
+    "mama": {
+      "en": "as it is; unchanged; while still (in a state)",
+      "zh": "保持原样、在某状态下就……"
+    },
+    "uchi-ni": {
+      "en": "while (before it changes); before it's too late; in the course of",
+      "zh": "趁……还没变；也可表示在……过程中"
+    },
+    "tokoro-ni-tokoro-e-tokoro-o": {
+      "en": "just when; at the moment (someone arrives or something interrupts)",
+      "zh": "正在……的时候碰巧遇到某事，或被打断"
+    },
+    "ba-hodo": {
+      "en": "the more ... the more",
+      "zh": "越……越……"
+    },
+    "hodo": {
+      "en": "to the extent that; so ... that",
+      "zh": "达到……的程度、……得几乎……"
+    },
+    "kurai-gurai-extent": {
+      "en": "to the extent that; so ... that; at least (something minimal)",
+      "zh": "……到……的程度；也可表示最低限度"
+    },
+    "sae": {
+      "en": "even",
+      "zh": "甚至、连……都……"
+    },
+    "sae-ba": {
+      "en": "if only; as long as; provided that",
+      "zh": "只要……就……"
+    },
+    "koso": {
+      "en": "precisely; it is ... that; (strong emphasis)",
+      "zh": "正是……、才……，用来强调"
+    },
+    "to-shite": {
+      "en": "as; in the role or capacity of",
+      "zh": "作为……、以……的身份"
+    },
+    "ni-totte": {
+      "en": "for; to (from the standpoint of)",
+      "zh": "对……而言，从某人的立场看"
+    },
+    "ni-shite-wa": {
+      "en": "for (considering it's); unexpectedly for",
+      "zh": "按……来说却……，结果与预期不同"
+    },
+    "ni-shite-mo": {
+      "en": "even if; even considering; granted that",
+      "zh": "即使……；即便考虑到……"
+    },
+    "ni-kanshite-ni-kansuru": {
+      "en": "regarding; concerning; related to",
+      "zh": "关于……、与……有关"
+    },
+    "ni-kurabete": {
+      "en": "compared to; in comparison with",
+      "zh": "与……相比"
+    },
+    "ni-kawatte": {
+      "en": "instead of; on behalf of; replacing",
+      "zh": "代替……、代表……"
+    },
+    "kawari-ni": {
+      "en": "instead of; in exchange for; to make up for",
+      "zh": "代替……；作为交换或补偿"
+    },
+    "ni-shitagatte": {
+      "en": "in accordance with; following; as ... (so ...)",
+      "zh": "按照……；也可表示随……变化"
+    },
+    "ni-tsurete": {
+      "en": "as (one thing changes, another changes too)",
+      "zh": "随着……而变化"
+    },
+    "to-tomo-ni": {
+      "en": "together with; along with; as; at the same time as",
+      "zh": "和……一起；随着、与此同时"
+    },
+    "tabi-ni": {
+      "en": "every time; whenever",
+      "zh": "每当……、每次……都……"
+    },
+    "goto-ni": {
+      "en": "every; each; at intervals of",
+      "zh": "每……、每隔……"
+    },
+    "saichuu-ni": {
+      "en": "right in the middle of; while (busy with)",
+      "zh": "正处于……之中，正在做某事时"
+    },
+    "tsuide-ni": {
+      "en": "while (at it); on the occasion of; since one is doing it anyway",
+      "zh": "顺便……、趁这个机会……"
+    },
+    "okage-de": {
+      "en": "thanks to; because of (good result)",
+      "zh": "多亏……，引出好结果"
+    },
+    "sei-de": {
+      "en": "because of; due to (bad result, blame)",
+      "zh": "都怪……，引出坏结果"
+    },
+    "ta-totan-ta-totan-ni": {
+      "en": "the moment; just as (something unexpected happens)",
+      "zh": "刚一……就突然……"
+    },
+    "tara-ta": {
+      "en": "when I did A, (I found that) B; upon doing, I discovered",
+      "zh": "做了某事后，发现了出乎意料的情况"
+    },
+    "tatte-datte": {
+      "en": "even if; no matter (casual)",
+      "zh": "即使……也……，较口语"
+    },
+    "nai-koto-wa-nai": {
+      "en": "it's not that ... not; can if necessary; not impossible",
+      "zh": "也不是不……；必要的话可以……"
+    },
+    "te-shou-ga-nai-te-shikata-ga-nai": {
+      "en": "extremely; can't help (feeling); unbearably",
+      "zh": "……得不得了、实在忍不住……"
+    },
+    "te-tamaranai": {
+      "en": "unbearably; dying to; extremely (feeling)",
+      "zh": "……得难以忍受，或非常想……"
+    },
+    "te-hajimete": {
+      "en": "only after; not until",
+      "zh": "直到……才第一次……"
+    },
+    "te-bakari-iru": {
+      "en": "do nothing but; keep on doing (critical)",
+      "zh": "老是做同一件事，常带批评"
+    },
+    "ba-ii": {
+      "en": "should; all you need to do is; I hope (with のに/けど: I wish)",
+      "zh": "只要……就行；也可表示建议或愿望"
+    },
+    "baai-wa": {
+      "en": "in the case of; if; in the event that",
+      "zh": "如果遇到……情况"
+    },
+    "to-sureba-to-shitara": {
+      "en": "if; supposing that; assuming",
+      "zh": "假如……、假设……"
+    },
+    "to-shite-mo": {
+      "en": "even if; even supposing",
+      "zh": "即使假设……也……"
+    },
+    "toka-hearsay": {
+      "en": "I heard something like; apparently",
+      "zh": "听说好像……，语气不确定"
+    },
+    "tte": {
+      "en": "(casual quotation) says that; I heard; as for; what is",
+      "zh": "口语引用或转述；也可提示话题或追问含义"
+    },
+    "to-iu-koto-da": {
+      "en": "I heard that; it means that; in other words",
+      "zh": "听说……；也可表示“就是说……”"
+    },
+    "to-iu-no-wa": {
+      "en": "what is meant by ... is; ... means; the reason is",
+      "zh": "所谓……是指……；也可解释原因"
+    },
+    "to-iu-yori": {
+      "en": "rather than; not so much A as B",
+      "zh": "与其说是甲，不如说是乙"
+    },
+    "wari-ni-wari-ni-wa": {
+      "en": "considering; for (unexpectedly)",
+      "zh": "照……来说，结果却比预想的……"
+    },
+    "kuse-ni": {
+      "en": "even though; despite (critical, reproachful)",
+      "zh": "明明……却……，常带责备"
+    },
+    "kara-ni-kakete": {
+      "en": "from ... through; over (a period or area)",
+      "zh": "从……到……，表示大致的时间或空间范围"
+    },
+    "buri": {
+      "en": "for the first time in (a period); manner, way of doing",
+      "zh": "时隔……再次；也可表示做事的样子或方式"
+    },
+    "kke": {
+      "en": "was it?; did I?; (trying to recall)",
+      "zh": "……来着？用来回忆或确认"
+    },
+    "masu-you-ni": {
+      "en": "I hope; may (wish, prayer)",
+      "zh": "希望……、但愿……"
+    },
+    "furi-o-suru": {
+      "en": "pretend to; act as if",
+      "zh": "假装做……、装作是……"
+    },
+    "muki-muke": {
+      "en": "suitable for / aimed at; intended for",
+      "zh": "适合……；面向……设计"
+    },
+    "gachi": {
+      "en": "tend to; be prone to; often",
+      "zh": "容易……、往往……"
+    },
+    "gimi": {
+      "en": "a touch of; slightly; somewhat (in that condition)",
+      "zh": "略有……的感觉或趋势"
+    },
+    "darake": {
+      "en": "full of; covered with; riddled with",
+      "zh": "满是……、到处都是……"
+    },
+    "kiru-kirenai": {
+      "en": "do completely; finish / can't finish; too many to",
+      "zh": "彻底做完；或多到无法做完"
+    },
+    "kakeru": {
+      "en": "half-done; start to; be about to",
+      "zh": "做了一半、刚开始做或差点发生"
+    },
+    "au": {
+      "en": "do to each other; do together",
+      "zh": "彼此做……、一起做……"
+    },
+    "naosu": {
+      "en": "redo; do over again (to fix or improve)",
+      "zh": "重新做……以改正或改善"
+    },
+    "zurai": {
+      "en": "hard to; difficult or uncomfortable to",
+      "zh": "做起来有困难或不舒服"
+    },
+    "beki-da-beki-de-wa-nai": {
+      "en": "should; ought to / should not",
+      "zh": "应该……；不应该……"
+    },
+    "hodo-wa-nai": {
+      "en": "nothing is as ... as; there's no ... like",
+      "zh": "没有比……更……的"
+    },
+    "shika-nai-no-choice": {
+      "en": "have no choice but to; can only",
+      "zh": "只能……、没有别的办法"
+    },
+    "made-even": {
+      "en": "even (an extreme case)",
+      "zh": "连……都……，强调极端事例"
+    },
+    "tokoro-datta": {
+      "en": "almost; nearly (but didn't)",
+      "zh": "差一点就……，实际上没有发生"
+    },
+    "kara-to-itte": {
+      "en": "just because (... doesn't mean); simply because",
+      "zh": "不能只因为……就认定……"
+    },
+    "toori-ni-doori-ni": {
+      "en": "as; in the way that; exactly as",
+      "zh": "照……一样、完全按照……"
+    },
+    "nanka-nante": {
+      "en": "things like; the likes of (dismissive or humble); how ...! (surprise)",
+      "zh": "……之类的，可表示轻视或自谦；也可表达惊讶"
+    }
+  },
+  "n4": {
+    "ageru-kureru-morau": {
+      "en": "give (to someone else); give (to me or my group); receive",
+      "zh": "给别人、别人给我方、从别人那里得到"
+    },
+    "te-ageru": {
+      "en": "do something for someone (as a favor)",
+      "zh": "为别人做某事"
+    },
+    "te-kureru": {
+      "en": "someone does something for me (or my group)",
+      "zh": "别人为我方做某事"
+    },
+    "te-morau": {
+      "en": "have someone do something (for me); get someone to do",
+      "zh": "请别人为我方做某事，或得到对方的帮助"
+    },
+    "te-kudasaru-te-itadaku": {
+      "en": "(honorific) someone kindly does for me; (humble) I receive the favor of someone doing",
+      "zh": "对方为我方做某事的尊敬说法；我方承蒙对方做某事的谦逊说法"
+    },
+    "te-iku": {
+      "en": "do something and go; go on doing (from now into the future)",
+      "zh": "做完再离开；也表示动作或变化从现在延续到将来"
+    },
+    "te-kuru": {
+      "en": "do something and come back; come doing; (change) up to now; start to",
+      "zh": "做了再来、朝这边做；也表示变化发展到现在或开始出现"
+    },
+    "te-shimau-chau": {
+      "en": "finish completely; do by accident; end up doing (with regret)",
+      "zh": "做完、做尽；也可表示不慎做了或说话人感到遗憾"
+    },
+    "te-oku": {
+      "en": "do in advance (to prepare); do and leave as is",
+      "zh": "事先做好准备；做完后保持原状"
+    },
+    "te-miru": {
+      "en": "try doing (to see what it is like)",
+      "zh": "试着做做看"
+    },
+    "te-aru": {
+      "en": "has been done (and stays that way); resulting state of a deliberate action",
+      "zh": "有意做成某状态，而且状态仍然保持"
+    },
+    "toki": {
+      "en": "when; at the time when",
+      "zh": "……的时候"
+    },
+    "aida-aida-ni": {
+      "en": "while; during (the whole time); at some point during",
+      "zh": "在整个期间……；在期间内的某个时候……"
+    },
+    "sou-da-appearance": {
+      "en": "looks like; seems; looks about to",
+      "zh": "看起来……、眼看就要……"
+    },
+    "sou-da-hearsay": {
+      "en": "I heard that; they say that",
+      "zh": "听说……、据说……"
+    },
+    "rashii": {
+      "en": "apparently; it seems; I hear",
+      "zh": "据说……、好像……，常根据听闻或间接信息"
+    },
+    "you-da": {
+      "en": "it seems; it appears (judging from evidence)",
+      "zh": "根据迹象判断“似乎……”"
+    },
+    "mitai": {
+      "en": "seems like; looks like; like (casual)",
+      "zh": "好像……、像……一样，较口语"
+    },
+    "sugiru": {
+      "en": "too; too much; excessively",
+      "zh": "太……、过于……"
+    },
+    "kata": {
+      "en": "how to; way of doing",
+      "zh": "做某事的方法"
+    },
+    "chuu-juu": {
+      "en": "in the middle of; during (ちゅう); throughout; all over (じゅう)",
+      "zh": "正在……期间；也可表示整个范围都……"
+    },
+    "tsumori": {
+      "en": "intend to; plan to",
+      "zh": "打算做……"
+    },
+    "yotei": {
+      "en": "plan to; be scheduled to",
+      "zh": "计划做……、预定……"
+    },
+    "koto-ni-suru": {
+      "en": "decide to",
+      "zh": "决定做……"
+    },
+    "koto-ni-naru": {
+      "en": "it has been decided that; it turns out that",
+      "zh": "已经决定……；也可表示结果成了这样"
+    },
+    "koto-ga-dekiru": {
+      "en": "can; be able to; be possible to",
+      "zh": "能够做某事"
+    },
+    "eru-rareru-potential": {
+      "en": "can; be able to (potential form)",
+      "zh": "动词的可能形，表示能做某事"
+    },
+    "reru-rareru-passive": {
+      "en": "be done (by someone); passive voice",
+      "zh": "动词的被动形，表示动作由别人施加"
+    },
+    "seru-saseru": {
+      "en": "make someone do; let someone do (causative)",
+      "zh": "让、叫或允许某人做某事"
+    },
+    "serareru-saserareru": {
+      "en": "be made to do (against one's will)",
+      "zh": "被迫做某事"
+    },
+    "ou-you": {
+      "en": "let's (casual); I'll (volitional form)",
+      "zh": "一起做吧；也可表示说话人的意志"
+    },
+    "you-to-omou": {
+      "en": "be thinking of doing; plan to",
+      "zh": "想做……、打算做……"
+    },
+    "e-ro": {
+      "en": "do it! (imperative form; blunt command)",
+      "zh": "做！表示直接命令"
+    },
+    "na-prohibition": {
+      "en": "don't! (strong prohibition)",
+      "zh": "不准做！表示强烈禁止"
+    },
+    "nasai": {
+      "en": "do (instruction from a parent, teacher, etc.)",
+      "zh": "请做……，多用于长辈或老师向晚辈提出要求"
+    },
+    "ba": {
+      "en": "if",
+      "zh": "如果……"
+    },
+    "tara": {
+      "en": "if; when; after",
+      "zh": "如果……；也可表示做完之后"
+    },
+    "nara": {
+      "en": "if (it's the case that); if you're talking about",
+      "zh": "如果是……的话；要是说的是……"
+    },
+    "to": {
+      "en": "when; if; whenever (natural or automatic result)",
+      "zh": "一……就……，常表示自然或规律性的结果"
+    },
+    "te-mo-de-mo": {
+      "en": "even if; even though",
+      "zh": "即使……也……"
+    },
+    "noni-although": {
+      "en": "although; even though (with surprise or dissatisfaction)",
+      "zh": "虽然……却……，常带意外或不满"
+    },
+    "noni-purpose": {
+      "en": "for; in order to (with use, time or cost)",
+      "zh": "用于……、做……需要多少时间或费用"
+    },
+    "node": {
+      "en": "because; since",
+      "zh": "因为……"
+    },
+    "te-reason": {
+      "en": "because; so (cause of a feeling or state)",
+      "zh": "表示感受或状态出现的原因"
+    },
+    "shi": {
+      "en": "and what's more; and besides (listing reasons)",
+      "zh": "而且……；可以列举多个理由"
+    },
+    "kedo-keredomo": {
+      "en": "but; although; (soft lead-in)",
+      "zh": "虽然……但是……；也可委婉引出话题"
+    },
+    "tame-ni": {
+      "en": "in order to; for (the sake of); because of",
+      "zh": "为了……；也可表示“由于……”"
+    },
+    "you-ni": {
+      "en": "so that; in order that",
+      "zh": "为了能……、以便……"
+    },
+    "you-ni-suru": {
+      "en": "try to; make sure to; make a habit of",
+      "zh": "尽量做到……，或有意识地养成习惯"
+    },
+    "you-ni-naru": {
+      "en": "come to; reach the point where (change in ability or habit)",
+      "zh": "逐渐能……、变得会……或开始有某种习惯"
+    },
+    "te-hoshii": {
+      "en": "want someone to do",
+      "zh": "希望别人做某事"
+    },
+    "tagaru": {
+      "en": "(someone else) wants to",
+      "zh": "看得出别人想做某事"
+    },
+    "garu": {
+      "en": "(someone else) feels; shows signs of feeling",
+      "zh": "表现出某种感受，用于描述他人"
+    },
+    "kamo-shirenai": {
+      "en": "might; may; possibly",
+      "zh": "也许……、可能……"
+    },
+    "darou": {
+      "en": "probably; I suppose (plain form of でしょう)",
+      "zh": "大概……，是でしょう的简体"
+    },
+    "hazu-da": {
+      "en": "should be; is expected to (based on reasoning)",
+      "zh": "按道理应该……"
+    },
+    "hazu-ga-nai": {
+      "en": "can't be; there's no way that",
+      "zh": "不可能……、按理不会……"
+    },
+    "n-desu-no-desu": {
+      "en": "it's that ...; (explaining or asking for an explanation)",
+      "zh": "用来解释情况，或请对方说明原因"
+    },
+    "ka-dou-ka": {
+      "en": "whether or not",
+      "zh": "是否……、是不是……"
+    },
+    "ka-embedded-question": {
+      "en": "embedded question (what, where, who, etc.)",
+      "zh": "把“什么、哪里、谁”等疑问嵌入句中"
+    },
+    "to-omou": {
+      "en": "I think that",
+      "zh": "我认为……"
+    },
+    "to-iu-say": {
+      "en": "say that; tell (quotation)",
+      "zh": "说……，引用发言"
+    },
+    "shika-nai": {
+      "en": "only; nothing but",
+      "zh": "只……，与否定形式搭配"
+    },
+    "bakari": {
+      "en": "nothing but; only; all",
+      "zh": "光是……、总是……、净是……"
+    },
+    "ta-bakari": {
+      "en": "have just done",
+      "zh": "刚做完……"
+    },
+    "tokoro-da": {
+      "en": "be about to; be in the middle of; have just done",
+      "zh": "正要做、正在做或刚做完"
+    },
+    "yasui-nikui": {
+      "en": "easy to; hard to",
+      "zh": "容易……、难以……"
+    },
+    "hajimeru-owaru-tsuzukeru": {
+      "en": "start doing; finish doing; keep doing",
+      "zh": "开始做、做完、继续做"
+    },
+    "dasu": {
+      "en": "suddenly start doing; burst out",
+      "zh": "突然开始做……"
+    },
+    "hodo-nai": {
+      "en": "not as ... as",
+      "zh": "不如……那么……"
+    },
+    "nakanaka-nai": {
+      "en": "not easily; just won't; not readily",
+      "zh": "很难……、迟迟不……"
+    },
+    "zutsu": {
+      "en": "each; at a time; little by little",
+      "zh": "每次各……，或一点一点地……"
+    },
+    "mo-emphasis": {
+      "en": "as many as; as much as; (with a negative) not even one",
+      "zh": "竟有这么多；与否定连用可表示“连一个也没有”"
+    },
+    "made-ni": {
+      "en": "by (a deadline); before",
+      "zh": "在……之前完成，以该时间为期限"
+    },
+    "koto-ga-aru": {
+      "en": "sometimes; there are times when",
+      "zh": "有时候会……"
+    },
+    "nai-to-ikenai-nakucha": {
+      "en": "have to; must (conversational)",
+      "zh": "得做……、必须做……，较口语"
+    },
+    "sasete-kudasai": {
+      "en": "please let me (do)",
+      "zh": "请允许我做……"
+    },
+    "sonkeigo": {
+      "en": "honorific verbs; respectful language for others' actions",
+      "zh": "尊敬语，用来抬高对方或第三者的动作"
+    },
+    "kenjougo": {
+      "en": "humble verbs; modest language for one's own actions",
+      "zh": "谦让语，用于谦称己方的动作"
+    },
+    "o-ni-naru": {
+      "en": "(honorific) someone respected does",
+      "zh": "尊敬表达，用于长辈、客人等人的动作"
+    },
+    "o-suru": {
+      "en": "(humble) I do (for someone respected)",
+      "zh": "谦让表达，用于己方为对方所做的动作"
+    },
+    "de-gozaimasu": {
+      "en": "is; am; are (very polite copula)",
+      "zh": "十分礼貌的判断表达，相当于“是……”"
+    },
+    "te-mo-kamawanai": {
+      "en": "don't mind if; it's fine if",
+      "zh": "……也没关系、……也无妨"
+    },
+    "no-koto-nominalizer": {
+      "en": "the act of doing (turns a verb phrase into a noun)",
+      "zh": "把动作或句子名词化"
+    },
+    "ba-yokatta": {
+      "en": "should have (done); I wish I had",
+      "zh": "早知道就……了；当时应该……"
+    },
+    "tara-dou": {
+      "en": "why don't you ...?; how about ...?",
+      "zh": "要不要……？用于提出建议"
+    },
+    "hou-ga-ii": {
+      "en": "had better; should",
+      "zh": "最好……、应该……"
+    },
+    "toka-toka": {
+      "en": "things like A and B; A, B and so on (casual)",
+      "zh": "比如……啦、……啦，口语列举"
+    },
+    "nado": {
+      "en": "etc.; and so on; such as",
+      "zh": "……等等、例如……"
+    },
+    "de-mo-suggestion": {
+      "en": "or something (softening a suggestion)",
+      "zh": "……之类的，用于委婉建议"
+    },
+    "sa": {
+      "en": "-ness (turns an adjective into a noun of degree)",
+      "zh": "把形容词变成表示性质或程度的名词"
+    },
+    "me": {
+      "en": "-th (ordinal: first, second, third ...)",
+      "zh": "第……，表示顺序"
+    },
+    "oki-ni": {
+      "en": "every other; at intervals of",
+      "zh": "每隔一定距离或时间"
+    },
+    "ku-suru-ni-suru": {
+      "en": "make (something) ...; change something to a state",
+      "zh": "把某事物变成某种状态"
+    },
+    "ga-suru": {
+      "en": "(a smell, sound, taste or feeling) is perceived",
+      "zh": "感觉到某种气味、声音、味道或感受"
+    },
+    "kana-kashira": {
+      "en": "I wonder",
+      "zh": "不知道……呢，表示自问或揣测"
+    },
+    "te-kuremasen-ka-te-itadakemasen-ka": {
+      "en": "could you please ...? (polite request)",
+      "zh": "能不能请您……？礼貌地请求对方做某事"
+    },
+    "naide": {
+      "en": "without doing; instead of doing",
+      "zh": "没有做……就做了另一件事，或用后者代替前者"
+    }
+  },
+  "n5": {
+    "wa": {
+      "en": "as for; marks the topic of the sentence",
+      "zh": "提示主题"
+    },
+    "ga-subject": {
+      "en": "marks the subject; points out new or focused information",
+      "zh": "标记主语，引出新信息或焦点"
+    },
+    "o": {
+      "en": "marks the direct object of a verb; marks a place moved through or left",
+      "zh": "标记宾语，或经过、离开的地点"
+    },
+    "ni-time": {
+      "en": "at; on; in (a specific point in time)",
+      "zh": "在某一具体时刻"
+    },
+    "ni-destination": {
+      "en": "to; into (the destination of movement)",
+      "zh": "到某处，表示移动的目的地"
+    },
+    "ni-location": {
+      "en": "in; at; on (where someone or something is)",
+      "zh": "在某处，表示人或事物存在的位置"
+    },
+    "ni-indirect-object": {
+      "en": "to (the person who receives or is the target of an action)",
+      "zh": "给、向，表示动作的接受者或对象"
+    },
+    "ni-frequency": {
+      "en": "per; in (how many times within a period)",
+      "zh": "每段时间内有几次"
+    },
+    "e": {
+      "en": "to; toward (the direction of movement)",
+      "zh": "朝、往，表示移动方向"
+    },
+    "de-place": {
+      "en": "at; in (the place where an action happens)",
+      "zh": "在某处进行动作"
+    },
+    "de-means": {
+      "en": "by; with; in (means, tool, method or language)",
+      "zh": "用、通过，表示工具、方式或语言"
+    },
+    "to-and": {
+      "en": "and (joining nouns in a complete list)",
+      "zh": "和，完整并列名词"
+    },
+    "to-with": {
+      "en": "with; together with (a partner in an action)",
+      "zh": "和某人一起"
+    },
+    "ya": {
+      "en": "and (giving some examples out of more); ... and so on",
+      "zh": "列举部分事例，意为“……之类”"
+    },
+    "ka-or": {
+      "en": "or (a choice between nouns)",
+      "zh": "或者，表示选择"
+    },
+    "mo": {
+      "en": "also; too; (with a negative) not ... either; neither ... nor",
+      "zh": "也；与否定搭配表示“也不”"
+    },
+    "no": {
+      "en": "'s; of (possession, belonging or description)",
+      "zh": "所属、修饰，相当于“的”"
+    },
+    "kara-from": {
+      "en": "from (a starting point in time or place)",
+      "zh": "从，表示时间或地点的起点"
+    },
+    "made": {
+      "en": "until; up to; as far as",
+      "zh": "到、直到"
+    },
+    "ka-question": {
+      "en": "(question marker) turns a sentence into a question",
+      "zh": "放在句末表示疑问"
+    },
+    "ne": {
+      "en": "isn't it?; right? (seeking agreement or sharing a feeling)",
+      "zh": "征求认同或分享感受，相当于“吧、呢”"
+    },
+    "yo": {
+      "en": "you know; I tell you (giving new information or emphasis)",
+      "zh": "告知新信息或加强语气"
+    },
+    "yori": {
+      "en": "than (the standard of comparison)",
+      "zh": "比……，标记比较的基准"
+    },
+    "no-hou-ga-yori": {
+      "en": "X is more ... than Y",
+      "zh": "与乙相比，甲更……"
+    },
+    "to-to-dochira-ga": {
+      "en": "which is more ..., X or Y?",
+      "zh": "甲和乙，哪一个更……？"
+    },
+    "no-naka-de-ga-ichiban": {
+      "en": "... is the most ... among/of",
+      "zh": "在……之中最……"
+    },
+    "desu": {
+      "en": "is; am; are (polite copula)",
+      "zh": "礼貌体判断句，表示“是”"
+    },
+    "da": {
+      "en": "is; am; are (plain copula)",
+      "zh": "简体判断句，表示“是”"
+    },
+    "de-wa-arimasen-ja-nai": {
+      "en": "is not; am not; are not",
+      "zh": "不是，分别为礼貌体和简体"
+    },
+    "deshita": {
+      "en": "was; were (polite past copula)",
+      "zh": "礼貌体判断句的过去式"
+    },
+    "masu": {
+      "en": "polite non-past verb ending (do; will do)",
+      "zh": "动词礼貌体的非过去式"
+    },
+    "masen": {
+      "en": "do not; will not (polite negative)",
+      "zh": "动词礼貌体的非过去否定式"
+    },
+    "mashita": {
+      "en": "did (polite past)",
+      "zh": "动词礼貌体的过去式"
+    },
+    "masen-deshita": {
+      "en": "did not (polite past negative)",
+      "zh": "动词礼貌体的过去否定式"
+    },
+    "nai": {
+      "en": "do not; will not (plain negative of verbs)",
+      "zh": "动词简体的非过去否定式"
+    },
+    "ta": {
+      "en": "did (plain past of verbs)",
+      "zh": "动词简体的过去式，也可表示完成"
+    },
+    "mashou": {
+      "en": "let's (do)",
+      "zh": "一起做吧"
+    },
+    "mashou-ka": {
+      "en": "shall I ...?; shall we ...?",
+      "zh": "要不要一起做，或“我来做吧？”"
+    },
+    "masen-ka": {
+      "en": "won't you ...?; would you like to ...? (polite invitation)",
+      "zh": "礼貌地邀请对方做某事"
+    },
+    "tai": {
+      "en": "want to (do)",
+      "zh": "想做某事"
+    },
+    "ga-hoshii": {
+      "en": "want (something)",
+      "zh": "想要某物"
+    },
+    "o-kudasai": {
+      "en": "please give me (something); I'll have",
+      "zh": "请给我某物；点单时表示“我要……”"
+    },
+    "te-kudasai": {
+      "en": "please (do)",
+      "zh": "请做某事"
+    },
+    "naide-kudasai": {
+      "en": "please don't (do)",
+      "zh": "请别做某事"
+    },
+    "te-mo-ii": {
+      "en": "may; it's okay to",
+      "zh": "可以做，表示许可"
+    },
+    "te-wa-ikenai": {
+      "en": "must not; may not",
+      "zh": "不可以做，表示禁止"
+    },
+    "nakereba-naranai-nakute-wa-ikenai": {
+      "en": "must; have to",
+      "zh": "必须做，不得不做"
+    },
+    "nakute-mo-ii": {
+      "en": "don't have to; need not",
+      "zh": "可以不做，不必做"
+    },
+    "te-iru": {
+      "en": "be doing (ongoing action); be in a state (result of a change); do regularly",
+      "zh": "正在做、动作后的状态或经常做"
+    },
+    "te": {
+      "en": "and; and then (linking actions in order)",
+      "zh": "连接动作，可表示先后顺序"
+    },
+    "te-kara": {
+      "en": "after doing; (do A) and then (B); since",
+      "zh": "做了某事之后；自从做了某事"
+    },
+    "tari-tari-suru": {
+      "en": "do things like A and B; sometimes A, sometimes B",
+      "zh": "做做这个、做做那个；有时做这个、有时做那个"
+    },
+    "ta-koto-ga-aru": {
+      "en": "have (ever) done; have the experience of doing",
+      "zh": "曾经做过，表示经历"
+    },
+    "mae-ni": {
+      "en": "before (doing); before (an event); ago",
+      "zh": "在……之前；若干时间以前"
+    },
+    "ato-de": {
+      "en": "after (doing); after (an event)",
+      "zh": "在……之后"
+    },
+    "nagara": {
+      "en": "while (doing two actions at the same time)",
+      "zh": "一边做某事，一边做另一件事"
+    },
+    "ni-iku": {
+      "en": "go (somewhere) to do",
+      "zh": "去某地做某事"
+    },
+    "ga-suki-ga-kirai": {
+      "en": "like; dislike",
+      "zh": "喜欢或不喜欢某事物"
+    },
+    "ga-jouzu-ga-heta": {
+      "en": "good at; bad at",
+      "zh": "擅长或不擅长某事"
+    },
+    "ga-aru-ga-iru": {
+      "en": "there is; there are; have (ある for things, いる for people and animals)",
+      "zh": "有……；ある用于事物，いる用于人和动物"
+    },
+    "kara-reason": {
+      "en": "because; since; so",
+      "zh": "因为……，所以……"
+    },
+    "ga-but": {
+      "en": "but; although",
+      "zh": "但是、虽然"
+    },
+    "deshou": {
+      "en": "probably; I think; ..., right?",
+      "zh": "大概……；也可向对方确认“……吧？”"
+    },
+    "ku-naru-ni-naru": {
+      "en": "become; get; turn",
+      "zh": "变得……、成为……"
+    },
+    "ni-suru": {
+      "en": "decide on; choose; I'll have",
+      "zh": "决定选……"
+    },
+    "mada-te-inai": {
+      "en": "not yet (have done)",
+      "zh": "还没做……"
+    },
+    "mou-ta": {
+      "en": "already (have done); (in questions) yet",
+      "zh": "已经做了……；疑问句中问“……了吗？”"
+    },
+    "amari-nai": {
+      "en": "not very; not much; not often",
+      "zh": "不太……、不怎么……"
+    },
+    "zenzen-nai": {
+      "en": "not at all; not in the least",
+      "zh": "完全不……、一点也不……"
+    },
+    "dake": {
+      "en": "only; just",
+      "zh": "只、仅仅"
+    },
+    "kurai-gurai": {
+      "en": "about; approximately (an amount or length of time)",
+      "zh": "大约，表示数量或时长"
+    },
+    "goro": {
+      "en": "around; about (a point in time)",
+      "zh": "大约，表示某个时刻"
+    },
+    "nani-mo-nai-dare-mo-nai": {
+      "en": "nothing; nobody; not anything; not anyone",
+      "zh": "什么都不……、谁都不……"
+    },
+    "nani-ka-dare-ka-doko-ka": {
+      "en": "something; someone; somewhere",
+      "zh": "某件东西、某个人、某个地方"
+    },
+    "kore-sore-are-dore": {
+      "en": "this one; that one (near you); that one (over there); which one",
+      "zh": "这个、那个（靠近听话人）、那个（离双方远）、哪个"
+    },
+    "kono-sono-ano-dono": {
+      "en": "this; that (near you); that ... over there; which (before a noun)",
+      "zh": "这个、那个、那个、哪个，后面要接名词"
+    },
+    "koko-soko-asoko-doko": {
+      "en": "here; there (near you); over there; where",
+      "zh": "这里、那里（靠近听话人）、那里（离双方远）、哪里"
+    },
+    "ku-nai-katta-ku-nakatta": {
+      "en": "negative and past forms of i-adjectives (is not; was; was not)",
+      "zh": "い形容词的否定、过去和过去否定形式"
+    },
+    "na-na-adjective": {
+      "en": "na-adjectives: take な before a noun and です or だ at the end of a sentence",
+      "zh": "な形容词修饰名词时接な，句末可用だ或です"
+    },
+    "kute-de": {
+      "en": "and (linking adjectives or nouns)",
+      "zh": "连接形容词或名词，表示并列"
+    },
+    "to-iu-named": {
+      "en": "called; named",
+      "zh": "叫作……、名为……"
+    }
+  }
+}
