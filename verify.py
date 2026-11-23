@@ -67,6 +67,10 @@ for lv in levels:
                 err(L, '语法缺字段', g.get('p'), k)
         for a, b in g['ex']:
             check_ruby('%s 语法 %s' % (L, g['p']), a)
+        if KANJI.search(g['p']) and not g.get('yomi'):
+            err(L, '句型含汉字，需要加 yomi（假名读法）', g['p'])
+        if g.get('yomi') and not KANA.match(g['yomi']):
+            err(L, 'yomi 含非假名', g['p'], g['yomi'])
         for quoted in re.findall(r'「([^」]*)」', g.get('note', '')):  # 补充说明是中文，只查「」里的日文
             check_ruby('%s 语法补充 %s' % (L, g['p']), quoted)
     for q, a, wrong, expl in lv['quiz']:
@@ -78,6 +82,13 @@ for lv in levels:
             check_ruby('%s 测验选项' % L, o)
         if '（　）' not in q:
             err(L, '题干缺少（　）', q)
+
+for name, want in (('たべる', 'taberu'), ('がっこう', 'gakkou'), ('しゃしん', 'shashin'), ('きょういく', 'kyouiku'), ('じゅんび', 'junbi'), ('ニチ', 'nichi')):
+    if build.romaji(name) != want:
+        err('罗马字转换', name, build.romaji(name), '≠', want)
+for f in ('dict/index.html', 'grammar/index.html'):
+    if not os.path.isfile(os.path.join(build.OUT, f)):
+        err('缺少页面', f)
 
 # 站内链接
 OUT = build.OUT

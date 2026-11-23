@@ -211,6 +211,7 @@
     }
     segs.forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
     if (location.hash === '#cards') setMode('cards', true);
+    window.addEventListener('hashchange', function () { setMode(location.hash === '#cards' ? 'cards' : 'list', true); });
   }
 
   /* ---------- 测验 ---------- */
@@ -339,6 +340,51 @@
     setup();
   }
 
+  /* ---------- 辞典 / 语法词典：搜索与筛选 ---------- */
+  function initLex() {
+    var box = $('[data-lex]'); if (!box) return;
+    var q = $('#q', box), count = $('#lx-count', box), empty = $('#empty', box);
+    var items = $$('[data-k]', box), groups = $$('.lx-group', box), total = items.length;
+    var f = { lv: '', ty: '' };
+    function norm(s) {  // 小写；片假名转平假名
+      return s.toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); });
+    }
+    function apply(push) {
+      var toks = norm(q.value).split(/\s+/).filter(Boolean), n = 0;
+      items.forEach(function (el) {
+        var k = el.getAttribute('data-k');
+        var ok = (!f.lv || (' ' + el.getAttribute('data-lv') + ' ').indexOf(' ' + f.lv + ' ') >= 0) &&
+          (!f.ty || el.getAttribute('data-ty') === f.ty) && toks.every(function (x) { return k.indexOf(x) >= 0; });
+        el.hidden = !ok; if (ok) n++;
+      });
+      groups.forEach(function (g) {
+        var has = !!$('[data-k]:not([hidden])', g);
+        g.hidden = !has;
+        var a = $('.jump a[href="#' + g.id + '"]', box); if (a) a.setAttribute('aria-disabled', String(!has));
+      });
+      if (toks.length) $$('details[data-k]', box).forEach(function (el) { el.open = !el.hidden && n <= 3; });
+      if (count) count.innerHTML = t('显示 ' + n + ' / ' + total + ' 条', n + ' / ' + total + ' 件を表示');
+      if (empty) empty.hidden = n > 0;
+      if (push && window.history && history.replaceState) {
+        var v = q.value.trim();
+        try { history.replaceState(null, '', location.pathname + (v ? '?q=' + encodeURIComponent(v) : '')); } catch (e) { /* 忽略 */ }
+      }
+    }
+    $$('.chips[data-f]', box).forEach(function (grp) {
+      var key = grp.getAttribute('data-f');
+      grp.addEventListener('click', function (e) {
+        var b = e.target.closest('.chip'); if (!b) return;
+        f[key] = b.getAttribute('data-v');
+        $$('.chip', grp).forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); });
+        apply(false);
+      });
+    });
+    q.addEventListener('input', function () { apply(true); });
+    try { var init = new URLSearchParams(location.search).get('q'); if (init) q.value = init; } catch (e) { /* 旧浏览器忽略 */ }
+    apply(false);
+  }
+
+  initLex();
   if (DATA && DATA.items) initDeck(DATA);
   if (DATA && DATA.g) initQuiz(DATA);
 })();
