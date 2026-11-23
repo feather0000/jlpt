@@ -7,6 +7,7 @@ N5–N1 的单词卡片、汉字、语法讲解和小测验，另有跨级别的
 
 ```
 content/n5.py … n1.py   每个级别的单词、汉字、语法、测验题
+content/dictionary/    按级别保存的导入词库 JSON
 assets/site.css         样式（浅色 / 深色，每个级别一个主色）
 assets/app.js           界面切换、间隔重复卡片、测验（无依赖）
 build.py                生成 dist/
@@ -31,10 +32,21 @@ python3 -m http.server -d dist 8000   # 本地预览
 - 例句和题目里的汉字都要注音，写成 `漢字[かんじ]`；`verify.py` 会找出漏掉的。
 - 测验题写成 `(题干, 正确选项, [3 个错误选项], 解说)`，选项顺序在页面上会打乱。
 - 词义、读音、汉字写法三类题目由单词表和汉字例词自动生成，不用单独写。
-- 辞典和语法词典也是从这些内容自动汇总的：单词表加汉字例词合并成辞典，全部句型合并成语法词典，都按五十音排序，可用汉字、假名、罗马字或中文搜索。
+- 辞典和语法词典汇总手写内容和导入词库，按五十音排序。词条按写法和读音合并，优先显示手写释义和例句。导入数据用于两个辞典页，学习卡片和测验从各级 `content/n*.py` 取材。
 - 句型里有汉字时，要加 `yomi='假名读法'`（如 `p='〜に対して', yomi='にたいして'`），语法词典靠它排序和搜索。
 
 改完后运行 `python3 verify.py`，再把 `content/` 和 `dist/` 一起提交。
+
+## 刷新辞典数据
+
+将 [OpenJLPT](https://github.com/evanclan/OpenJLPT) 的源码解压到本地，并下载和解压 [Tomoshi SQLite 发布包](https://github.com/tomoshi-app/tomoshi-dict-data/releases)。刷新公开词典时，建议每月用最新的上游版本生成数据。
+
+```
+python3 import_dictionary.py --openjlpt path/to/OpenJLPT --tomoshi path/to/tomoshi-dict-open.db
+python3 verify.py
+```
+
+构建只读取本地快照，无需联网。OpenJLPT 提供参考分级与英文语法释义，Tomoshi 提供简体中文词义。缺少中文释义时显示上游英文释义。导入数据和署名详见 [DICTIONARY-SOURCES.txt](DICTIONARY-SOURCES.txt)。
 
 ## 部署到 Cloudflare Pages
 

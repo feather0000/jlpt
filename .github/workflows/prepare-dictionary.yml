@@ -1,0 +1,37 @@
+name: Prepare JLPT dictionary snapshot
+
+on:
+  push:
+    branches: [dictionary-import]
+    paths:
+      - '.github/workflows/prepare-dictionary.yml'
+      - 'import_dictionary.py'
+
+permissions:
+  contents: write
+
+jobs:
+  import-dictionary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Download and verify input data
+        run: |
+          git init "$RUNNER_TEMP/openjlpt"
+          git -C "$RUNNER_TEMP/openjlpt" fetch --depth=1 https://github.com/evanclan/OpenJLPT.git 0d1d3410bec90bd4098a7c72de820543cb4f707c
+          git -C "$RUNNER_TEMP/openjlpt" checkout --detach FETCH_HEAD
+          curl --fail --silent --show-error --location --retry 2 --output "$RUNNER_TEMP/tomoshi.db.zst" https://github.com/tomoshi-app/tomoshi-dict-data/releases/download/v2026-11-16/tomoshi-dict-open.db.zst
+          echo "793d26a8963bff8b4dc39e83190d6f1608449f25aa5a8b5f9163c44e8c39b684  $RUNNER_TEMP/tomoshi.db.zst" | sha256sum -c
+          zstd --decompress "$RUNNER_TEMP/tomoshi.db.zst" --output "$RUNNER_TEMP/tomoshi.db"
+      - name: Generate and verify the public dictionary
+        run: |
+          python3 import_dictionary.py --openjlpt "$RUNNER_TEMP/openjlpt" --tomoshi "$RUNNER_TEMP/tomoshi.db"
+          python3 verify.py
+      - name: Commit the verified dictionary on the staging branch
+        run: |
+          git add content/dictionary dist
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Generate the localized JLPT dictionaries'
+            git push origin HEAD:refs/heads/dictionary-import
+          fi

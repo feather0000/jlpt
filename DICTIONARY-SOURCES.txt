@@ -1,0 +1,32 @@
+JLPT 辞典数据来源 / Dictionary data and attribution
+
+The imported datasets in content/dictionary/ and the corresponding data in the
+published dictionary pages are available under CC BY-SA 4.0.
+https://creativecommons.org/licenses/by-sa/4.0/
+
+OpenJLPT contributors, CC BY-SA 4.0
+https://github.com/evanclan/OpenJLPT
+https://github.com/evanclan/OpenJLPT/blob/main/NOTICE.md
+Snapshot: 0d1d3410bec90bd4098a7c72de820543cb4f707c
+OpenJLPT supplies the level lists, terminology, readings, grammar points and
+examples. Its upstream sources include the following:
+
+- Jonathan Waller's JLPT Resources, CC BY: https://www.tanos.co.uk/jlpt/
+- JMdict and KANJIDIC2, Electronic Dictionary Research and Development Group
+  (EDRDG). These files are the property of EDRDG and are used in conformance
+  with the EDRDG licence (CC BY-SA 4.0): https://www.edrdg.org/edrdg/licence.html
+- Tatoeba contributors, CC BY 2.0 FR: https://tatoeba.org/
+  https://creativecommons.org/licenses/by/2.0/fr/
+  Vocabulary examples carry a Tatoeba sentence ID in the HTML and source JSON.
+  Contributor details: https://tatoeba.org/sentences/show/<sentence-id>
+
+Tomoshi (Y1Z), CC BY-SA 4.0
+https://github.com/tomoshi-app/tomoshi-dict-data
+https://github.com/tomoshi-app/tomoshi-dict-data/blob/main/NOTICE.md
+Initial snapshot: https://github.com/tomoshi-app/tomoshi-dict-data/releases/tag/v2026-11-16
+Tomoshi supplies the Chinese word and kanji glosses in the localized snapshot.
+Those glosses were generated with AI assistance and have varying review coverage.
+
+Changes here: imported and selected fields and examples, joined Chinese glosses
+to JLPT entries, converted furigana, and combined the data with curated entries.
+JLPT levels are community estimates for study reference.
