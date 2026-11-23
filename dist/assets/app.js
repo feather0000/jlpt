@@ -345,7 +345,7 @@
     var box = $('[data-lex]'); if (!box) return;
     var controls = $('.lx-tools', box), q = $('#q', box), count = $('#lx-count', box);
     var results = $('.lx-results', box), empty = $('#empty', box), error = $('.lx-error', box);
-    var pager = $('.lx-pages', box), steps = $('[data-step]', pager);
+    var pager = $('.lx-pages', box), steps = $$('[data-step]', pager);
     var orderButtons = $$('[data-order]', controls), indexes = $$('[data-index]', controls);
     var size = +box.dataset.pageSize, indexUrl = new URL(box.dataset.indexUrl, location.href);
     var rows, orders, pending, delay;
@@ -359,7 +359,7 @@
     function index() {
       return indexes.find(function (nav) { return nav.dataset.index === mode; });
     }
-    if (!$('[data-group]', index()).some(function (b) { return b.dataset.group === group; })) group = '';
+    if (!$$('[data-group]', index()).some(function (b) { return b.dataset.group === group; })) group = '';
 
     function syncIndex() {
       orderButtons.forEach(function (button) {
