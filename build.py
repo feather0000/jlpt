@@ -5,6 +5,7 @@
 内容写在 content/n5.py … n1.py，改完重新构建；dist/ 就是要部署的目录。
 """
 import glob
+import hashlib
 import html
 import importlib.util
 import json
@@ -13,6 +14,7 @@ import re
 import shutil
 import unicodedata
 from collections import Counter
+from itertools import groupby
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'dist')
@@ -243,7 +245,7 @@ def kanji(lv, levels):
     rows, items = '', []
     for ch, on, kun, zh, ws in lv['kanji']:
         cid = '%s:k:%s' % (lv['id'], ch)
-        rows += kcard(lv, ch, on, kun, zh, ws, attrs=' data-id="%s"' % esc(cid), tail='<span class="st" aria-hidden="true"></span>')
+        rows += kcard(lv, ch, on, kun, zh, ws, attrs=' data-id="%s" data-k="%s"' % (esc(cid), esc(kanji_key(ch, on, kun, zh, ws))), tail='<span class="st" aria-hidden="true"></span>')
         items.append(dict(id=cid, w=ch, on=on, kun=kun, m=zh, ws=[list(x) for x in ws]))
     body = seg('k') + '<ol class="kgrid" id="list">%s</ol><p class="empty" id="empty" hidden>%s</p>' % (rows, T('没有匹配的汉字。', '該当する漢字がありません。'))
     page(lv, levels, 'kanji/', '汉字', '漢字', '%s 汉字：音读、训读、常用词和记忆卡片。' % lv['name'], body,
@@ -284,7 +286,9 @@ ROWS = [  # (id, 行名, 起, 止)：按读音首字的五十音行分组
     ('a', 'あ', 'ぁ', 'お'), ('ka', 'か', 'か', 'ご'), ('sa', 'さ', 'さ', 'ぞ'), ('ta', 'た', 'た', 'ど'), ('na', 'な', 'な', 'の'),
     ('ha', 'は', 'は', 'ぽ'), ('ma', 'ま', 'ま', 'も'), ('ya', 'や', 'ゃ', 'よ'), ('ra', 'ら', 'ら', 'ろ'), ('wa', 'わ', 'ゎ', 'ん'),
 ]
+ROW_ORDER = {rid: index for index, (rid, _, _, _) in enumerate(ROWS)}
 KANA_ONLY = re.compile(r'[^ぁ-ゖァ-ー]')
+LEX_PAGE_SIZE = 40
 
 
 def hira(s):
@@ -342,6 +346,10 @@ def romaji(s):
 def skey(*parts):
     """搜索键：小写、片假名转平假名，各部分用空格隔开。"""
     return esc(hira(' '.join(p for p in parts if p).lower()))
+
+
+def search_key(*parts):
+    return hira(unicodedata.normalize('NFKC', ' '.join(p for p in parts if p)).lower())
 
 
 def badges(ids, root, sec):
@@ -411,7 +419,27 @@ def lexicon(levels, imported):
     return sorted(words.values(), key=lambda e: (hira(e['r']), e['w']))
 
 
-def lex_tools(placeholder, types=None):
+def lex_index(rows):
+    kana = [(rid, name) for rid, name, _, _ in ROWS if any(row[3] == rid for row in rows)]
+    az = sorted({row[4][:1] or 'other' for row in rows if row[2] != 'k'})
+    roman = [(letter, letter.upper() if letter != 'other' else T('其他', 'その他')) for letter in az]
+    if any(row[2] == 'k' for row in rows):
+        kana.append(('kanji', '漢字'))
+        roman.append(('kanji', '漢字'))
+    navs = ''
+    for mode, label, groups in [('kana', '五十音', kana), ('romaji', 'A–Z', roman)]:
+        items = [('', T('全部', 'すべて'))] + groups
+        buttons = ''.join('<button type="button" data-group="%s" aria-pressed="%s">%s</button>' % (
+            value, 'false' if value else 'true', text) for value, text in items)
+        navs += '<nav class="jump" data-index="%s" aria-label="%s"%s>%s</nav>' % (
+            mode, label, ' hidden' if mode == 'romaji' else '', buttons)
+    return ('<div class="lx-index"><div class="seg" role="group" aria-label="排序 / 並び順">'
+            '<button type="button" data-order="kana" aria-pressed="true">五十音</button>'
+            '<button type="button" data-order="romaji" aria-pressed="false">%s</button></div>%s</div>') % (
+                T('罗马字 A–Z', 'ローマ字 A–Z'), navs)
+
+
+def lex_tools(placeholder, rows, types=None):
     lv = '<button type="button" class="chip" data-v="" aria-pressed="true">%s</button>' % T('全部级别', '全レベル')
     lv += ''.join('<button type="button" class="chip" data-v="n%d" aria-pressed="false">N%d</button>' % (n, n) for n in (5, 4, 3, 2, 1))
     ty = ''
@@ -419,22 +447,66 @@ def lex_tools(placeholder, types=None):
         ty = '<div class="chips" data-f="ty">%s</div>' % ''.join(
             '<button type="button" class="chip" data-v="%s" aria-pressed="%s">%s</button>' % (v, 'true' if not v else 'false', T(zh, ja)) for v, zh, ja in types)
     return ('<div class="lx-tools"><input class="search big" id="q" name="q" type="search" placeholder="%s" aria-label="搜索 / 検索" autocomplete="off" autocapitalize="off" spellcheck="false">'
-            '<div class="chips" data-f="lv">%s</div>%s<p class="lx-count" id="lx-count" aria-live="polite"></p></div>') % (placeholder, lv, ty)
+            '<div class="lx-filters"><div class="chips" data-f="lv">%s</div>%s</div>%s<p class="lx-count" id="lx-count" aria-live="polite"></p></div>') % (
+                placeholder, lv, ty, lex_index(rows))
+
+
+def lex_page(path, rows, title, desc, lead, placeholder, types=None):
+    """Keep searchable metadata separate from the HTML for each batch of entries."""
+    summary = json.dumps([row[:-1] for row in rows], ensure_ascii=False, separators=(',', ':'))
+    digest = hashlib.sha256(summary.encode('utf-8'))
+    batches = []
+    for offset in range(0, len(rows), LEX_PAGE_SIZE):
+        batch = json.dumps([row[-1] for row in rows[offset:offset + LEX_PAGE_SIZE]], ensure_ascii=False, separators=(',', ':'))
+        digest.update(batch.encode('utf-8'))
+        batches.append(batch)
+    data_path = 'data-' + digest.hexdigest()[:12] + '/'
+    write(path + '/' + data_path + 'index.json', summary)
+    for number, batch in enumerate(batches):
+        write(path + '/' + data_path + '%d.json' % number, batch)
+
+    labels = {rid: name + '行' for rid, name, _, _ in ROWS}
+    labels['kanji'] = '漢字'
+    initial = ''
+    for (kind, group), members in groupby(rows[:LEX_PAGE_SIZE], key=lambda row: (row[2], row[3])):
+        entries = ''.join(row[-1] for row in members)
+        if kind != 'g':
+            entries = '<ol class="%s">%s</ol>' % ('vlist' if kind == 'w' else 'kgrid', entries)
+        initial += '<section class="lx-group"><h2 lang="ja">%s</h2>%s</section>' % (labels[group], entries)
+    body = ('<header class="lx-head"><div class="eyebrow"><span></span>{eb}</div><h1>{title}</h1><p class="lead">{lead}</p></header>'
+            '<div class="lx" data-lex data-index-url="{index}" data-page-size="{size}">{tools}'
+            '<div class="lx-results" tabindex="-1">{initial}</div>'
+            '<p class="empty" id="empty" hidden>{empty}</p><div class="lx-error" hidden><p>{error}</p>'
+            '<button type="button" class="btn ghost" data-retry>{retry}</button></div>'
+            '<nav class="lx-pages" aria-label="分页 / ページ" hidden><button type="button" class="btn ghost" data-step="-1">{prev}</button>'
+            '<span></span><button type="button" class="btn ghost" data-step="1">{next}</button></nav>'
+            '<noscript><p class="nojs">{nojs}</p></noscript></div>').format(
+        eb=T('工具书', '辞書'), title=T(*title), lead=lead, index=data_path + 'index.json', size=LEX_PAGE_SIZE,
+        tools=lex_tools(placeholder, rows, types), initial=initial,
+        empty=T('没有符合条件的条目。', '該当する項目がありません。'),
+        error=T('辞典加载失败。', '辞書を読み込めませんでした。'), retry=T('重新加载', '再読み込み'),
+        prev=T('上一页', '前のページ'), next=T('下一页', '次のページ'),
+        nojs=T('启用 JavaScript 后可搜索和翻页。', '検索やページ切り替えには JavaScript が必要です。'))
+    write(path + '/index.html', shell(title[0] + ' · JLPT 学习站', title[1] + ' · JLPT 学習サイト', desc, 1, body, nav=path))
+
+
+def kanji_key(ch, on, kun, zh, ws):
+    kun_plain = re.sub(r'[（）]', '', kun)
+    roman = ' '.join(romaji(reading) for reading in (on + '・' + kun_plain).split('・'))
+    return search_key(ch, on, kun_plain, roman, zh, ' '.join(w + ' ' + r for w, r, _ in ws))
 
 
 def kcard(lv, ch, on, kun, zh, ws, attrs='', extra='', tail='', gloss_lang=None):
     wl = ''.join('<li><span class="k-w" lang="ja">%s</span><span class="kana" lang="ja">%s</span><span class="k-wz">%s</span></li>' % (esc(w), esc(r), esc(z)) for w, r, z in ws)
-    kun_plain = re.sub(r'[（）]', '', kun)
-    key = skey(ch, on, kun_plain, romaji(on.replace('・', ' ')), romaji(kun_plain.replace('・', ' ')), zh, ' '.join(w + ' ' + r for w, r, _ in ws))
-    return ('<li class="kcard" data-k="{k}"{attrs}><div class="k-ch" lang="ja">{ch}</div><div class="k-body">'
+    return ('<li class="kcard"{attrs}><div class="k-ch" lang="ja">{ch}</div><div class="k-body">'
             '<p class="k-m">{extra}{zh}</p><dl class="k-yomi"><dt>{on_l}</dt><dd lang="ja">{on}</dd><dt>{kun_l}</dt><dd lang="ja">{kun}</dd></dl>'
             '<ul class="k-ws">{wl}</ul></div>{tail}</li>').format(
-        k=key, attrs=attrs, ch=esc(ch), extra=extra, zh=meaning_markup(zh, gloss_lang), on_l=T('音读', '音読み'), on=esc(on), kun_l=T('训读', '訓読み'), kun=esc(kun), wl=wl, tail=tail)
+        attrs=attrs, ch=esc(ch), extra=extra, zh=meaning_markup(zh, gloss_lang), on_l=T('音读', '音読み'), on=esc(on), kun_l=T('训读', '訓読み'), kun=esc(kun), wl=wl, tail=tail)
 
 
 def dict_page(levels, imported):
     ents = lexicon(levels, imported)
-    groups = dict((rid, '') for rid, _, _, _ in ROWS)
+    rows = []
     for e in ents:
         right = ''
         if e.get('x'):
@@ -445,47 +517,36 @@ def dict_page(levels, imported):
             right += '<span class="lx-src">%s%s</span>' % (T('汉字 ', '漢字 '), ''.join(
                 '<a href="../%s/kanji/" lang="ja">%s</a>' % (lid, esc(ch)) for ch, lid in e['src']))
         pos = '<span class="pos">%s</span>' % T(*POS[e['pos']]) if e['pos'] else ''
-        groups[kana_row(e['r'])] += (
-            '<li class="vrow" data-k="{k}" data-lv="{lv}" data-ty="w"><div class="v-head"><span class="v-w" lang="ja">{w}</span>'
+        entry = (
+            '<li class="vrow"><div class="v-head"><span class="v-w" lang="ja">{w}</span>'
             '<span class="v-r" lang="ja">{r}</span></div><div class="v-mid">{b}{pos}<span class="v-m">{m}</span></div>'
             '<div class="v-ex">{right}</div></li>').format(
-            k=skey(e['w'], e['r'], romaji(e['r']), e['m']), lv=' '.join(e['lv']), w=esc(e['w']), r=esc(e['r']) if e['r'] != e['w'] else '',
+            w=esc(e['w']), r=esc(e['r']) if e['r'] != e['w'] else '',
             b=badges(e['lv'], '../', e.get('sec', 'vocab/' if e['pos'] else 'kanji/')), pos=pos, m=meaning_markup(e['m'], e.get('lang')), right=right)
-    jump, secs = '', ''
-    for rid, name, _, _ in ROWS:
-        if groups[rid]:
-            jump += '<a href="#r-%s" lang="ja">%s</a>' % (rid, name)
-            secs += '<section class="lx-group" id="r-%s"><h2 lang="ja">%s<small>行</small></h2><ol class="vlist">%s</ol></section>' % (rid, name, groups[rid])
-    kan = []
+        roman = romaji(e['r'])
+        rows.append((search_key(e['w'], e['r'], roman, e['m']), ' '.join(e['lv']), 'w', kana_row(e['r']), roman, entry))
+    rows.sort(key=lambda row: ROW_ORDER[row[3]])
     manual_chars = {ch for lv in levels for ch, *_ in lv['kanji']}
     word_examples = {}
     for e in ents:
         word_examples.setdefault(e['w'], (e['w'], e['r'], e['m']))
     for lv in levels:
         lid = lv['id']
-        attrs = ' data-lv="%s" data-ty="k"' % lid
         extra = badges([lid], '../', 'kanji/')
         for ch, on, kun, zh, ws in lv['kanji']:
-            kan.append(kcard(lv, ch, on, kun, zh, ws, attrs=attrs, extra=extra))
+            rows.append((kanji_key(ch, on, kun, zh, ws), lid, 'k', 'kanji', '', kcard(lv, ch, on, kun, zh, ws, extra=extra)))
         for row in imported[lid]['kanji']:
             if row['ch'] in manual_chars:
                 continue
             ws = [word_examples[w] for w in row['words'][:3] if w in word_examples]
-            kan.append(kcard(lv, row['ch'], row['on'], row['kun'], row['m'], ws, attrs=attrs, extra=extra, gloss_lang=row['lang']))
-    n_k = len(kan)
-    jump += '<a href="#r-kanji" lang="ja">漢字</a>'
-    secs += '<section class="lx-group" id="r-kanji"><h2>%s</h2><ol class="kgrid">%s</ol></section>' % (T('汉字', '漢字'), ''.join(kan))
-    body = ('<header class="lx-head"><div class="eyebrow"><span></span>{eb}</div><h1>{h1}</h1><p class="lead">{lead}</p></header>'
-            '<div class="lx" data-lex data-total="{total}">{tools}<nav class="jump" aria-label="五十音">{jump}</nav>{secs}'
-            '<p class="empty" id="empty" hidden>{empty}</p></div>').format(
-        eb=T('工具书', '辞書'), h1=T('辞典', '辞書'),
-        lead=T('收录 N5–N1 的 %d 个单词和 %d 个汉字。单词按五十音排列，可用汉字、假名、罗马字或中文查。级别仅供参考。' % (len(ents), n_k),
-               'N5–N1 の語彙 %d 語と漢字 %d 字を収録。語彙は五十音順で、漢字・かな・ローマ字・中国語で検索できます。レベルは目安です。' % (len(ents), n_k)),
-        total=len(ents) + n_k,
-        tools=lex_tools('漢字 / かな / romaji / 中文', [('', '全部', 'すべて'), ('w', '单词', '語彙'), ('k', '汉字', '漢字')]),
-        jump=jump, secs=secs, empty=T('没有找到。这里只收录本站已有的内容。', '見つかりません。本サイトに収録された内容のみ検索できます。'))
-    write('dict/index.html', shell('辞典 · JLPT 学习站', '辞書 · JLPT 学習サイト',
-                                   'JLPT N5–N1 单词与汉字辞典：按五十音排列，可用汉字、假名、罗马字或中文搜索。', 1, body, nav='dict'))
+            ch, on, kun, zh = (row[key] for key in ('ch', 'on', 'kun', 'm'))
+            entry = kcard(lv, ch, on, kun, zh, ws, extra=extra, gloss_lang=row['lang'])
+            rows.append((kanji_key(ch, on, kun, zh, ws), lid, 'k', 'kanji', '', entry))
+    n_k = len(rows) - len(ents)
+    lead = T('收录 N5–N1 的 %d 个单词和 %d 个汉字。可用汉字、假名、罗马字或中文查。级别仅供参考。' % (len(ents), n_k),
+             'N5–N1 の語彙 %d 語と漢字 %d 字を収録。漢字・かな・ローマ字・中国語で検索できます。レベルは目安です。' % (len(ents), n_k))
+    lex_page('dict', rows, ('辞典', '辞書'), 'JLPT N5–N1 单词与汉字辞典，可用汉字、假名、罗马字或中文搜索。', lead,
+             '漢字 / かな / romaji / 中文', [('', '全部', 'すべて'), ('w', '单词', '語彙'), ('k', '汉字', '漢字')])
     return len(ents), n_k
 
 
@@ -509,7 +570,7 @@ def gdict_page(levels, imported):
             if pattern not in seen or frequency[pattern] > 1:
                 ents.append((gkey(g), lv, None, g))
     ents.sort(key=lambda t: (t[0], t[1]['id']))
-    groups = dict((rid, '') for rid, _, _, _ in ROWS)
+    rows = []
     for key, lv, i, g in ents:
         en = ' lang="en"' if i is None else ''
         exs = ''.join('<li><span lang="ja">%s</span><span class="ex-zh"%s>%s</span></li>' % (ruby(a), en, esc(b)) for a, b in g['ex'])
@@ -523,28 +584,21 @@ def gdict_page(levels, imported):
         else:
             href = 'https://github.com/evanclan/OpenJLPT/blob/main/data/json/grammar/%s.json' % lv['id']
             link = T('查看 OpenJLPT 来源', 'OpenJLPT の出典を見る')
-        groups[kana_row(key)] += (
-            '<details class="gd" data-level="{lid}" data-k="{k}" data-lv="{lid}" data-ty="g"><summary><span class="gd-p" lang="ja">{p}</span>'
+        entry = (
+            '<details class="gd" data-level="{lid}"><summary><span class="gd-p" lang="ja">{p}</span>'
             '<span class="lvb">{name}</span><span class="gd-m">{mean}</span></summary><div class="gd-body">'
             '<p class="gp-conn"><b>{cl}</b>{conn}</p><ul class="gp-ex">{exs}</ul>{note}'
             '<p class="gd-more"><a href="{href}">{link}<span aria-hidden="true"> →</span></a></p></div></details>').format(
-            lid=lv['id'], k=skey(g['p'], g.get('yomi', ''), key, romaji(key), g.get('romaji', ''), zh, ja, g.get('en', ''), g['conn']),
-            p=esc(g['p']), name=lv['name'], mean=mean, cl=T('接续', '接続'), conn=conn, exs=exs, note=note, href=href, link=link)
-    jump, secs = '', ''
-    for rid, name, _, _ in ROWS:
-        if groups[rid]:
-            jump += '<a href="#r-%s" lang="ja">%s</a>' % (rid, name)
-            secs += '<section class="lx-group" id="r-%s"><h2 lang="ja">%s<small>行</small></h2>%s</section>' % (rid, name, groups[rid])
-    body = ('<header class="lx-head"><div class="eyebrow"><span></span>{eb}</div><h1>{h1}</h1><p class="lead">{lead}</p></header>'
-            '<div class="lx" data-lex data-total="{total}">{tools}<nav class="jump" aria-label="五十音">{jump}</nav>{secs}'
-            '<p class="empty" id="empty" hidden>{empty}</p></div>').format(
-        eb=T('工具书', '辞書'), h1=T('语法词典', '文法辞典'),
-        lead=T('收录 N5–N1 的 %d 个句型，按五十音顺序排列。点开句型可看接续和例句。级别仅供参考。' % len(ents),
-               'N5–N1 の文型 %d 項目を五十音順に収録。文型を開くと接続と例文が見られます。レベルは目安です。' % len(ents)),
-        total=len(ents), tools=lex_tools('文型 / かな / romaji / 中文'), jump=jump, secs=secs,
-        empty=T('没有找到。这里只收录本站已有的句型。', '見つかりません。本サイトに収録された文型のみ検索できます。'))
-    write('grammar/index.html', shell('语法词典 · JLPT 学习站', '文法辞典 · JLPT 学習サイト',
-                                      'JLPT N5–N1 语法词典：句型按五十音排列，附接续、中日文说明和例句，可搜索。', 1, body, nav='grammar'))
+            lid=lv['id'], p=esc(g['p']), name=lv['name'], mean=mean, cl=T('接续', '接続'), conn=conn, exs=exs, note=note, href=href, link=link)
+        roman = romaji(key)
+        alias = g.get('romaji', '')
+        normalized = re.sub(r'[^a-z]', '', unicodedata.normalize('NFKD', alias.lower()))
+        rows.append((search_key(g['p'], g.get('yomi', ''), key, roman, alias, normalized, zh, ja, g.get('en', ''), g['conn']),
+                     lv['id'], 'g', kana_row(key), normalized or roman, entry))
+    rows.sort(key=lambda row: ROW_ORDER[row[3]])
+    lead = T('收录 N5–N1 的 %d 个句型，点开可看接续和例句。级别仅供参考。' % len(ents),
+             'N5–N1 の文型 %d 項目を収録。文型を開くと接続と例文が見られます。レベルは目安です。' % len(ents))
+    lex_page('grammar', rows, ('语法词典', '文法辞典'), 'JLPT N5–N1 语法词典，附接续、说明和例句，可搜索。', lead, '文型 / かな / romaji / 中文')
     return len(ents)
 
 

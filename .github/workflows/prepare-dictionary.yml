@@ -5,7 +5,10 @@ on:
     branches: [dictionary-import]
     paths:
       - '.github/workflows/prepare-dictionary.yml'
+      - 'assets/**'
+      - 'build.py'
       - 'import_dictionary.py'
+      - 'verify.py'
 
 permissions:
   contents: write

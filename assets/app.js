@@ -340,48 +340,200 @@
     setup();
   }
 
-  /* ---------- 辞典 / 语法词典：搜索与筛选 ---------- */
+  /* ---------- 辞典 / 语法词典 ---------- */
   function initLex() {
     var box = $('[data-lex]'); if (!box) return;
-    var q = $('#q', box), count = $('#lx-count', box), empty = $('#empty', box);
-    var items = $$('[data-k]', box), groups = $$('.lx-group', box), total = items.length;
-    var f = { lv: '', ty: '' };
-    function norm(s) {  // 小写；片假名转平假名
-      return s.toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); });
+    var controls = $('.lx-tools', box), q = $('#q', box), count = $('#lx-count', box);
+    var results = $('.lx-results', box), empty = $('#empty', box), error = $('.lx-error', box);
+    var pager = $('.lx-pages', box), steps = $('[data-step]', pager);
+    var orderButtons = $$('[data-order]', controls), indexes = $$('[data-index]', controls);
+    var size = +box.dataset.pageSize, indexUrl = new URL(box.dataset.indexUrl, location.href);
+    var rows, orders, pending, delay;
+    var page = 0, filters = { lv: '', ty: '' };
+    var params = new URLSearchParams(location.search);
+    var mode = params.get('sort') === 'romaji' ? 'romaji' : 'kana';
+    var group = /^#r-([a-z]+)$/.exec(location.hash);
+    group = group ? group[1] : '';
+    q.value = params.get('q') || '';
+
+    function index() {
+      return indexes.find(function (nav) { return nav.dataset.index === mode; });
     }
-    function apply(push) {
-      var toks = norm(q.value).split(/\s+/).filter(Boolean), n = 0;
-      items.forEach(function (el) {
-        var k = el.getAttribute('data-k');
-        var ok = (!f.lv || (' ' + el.getAttribute('data-lv') + ' ').indexOf(' ' + f.lv + ' ') >= 0) &&
-          (!f.ty || el.getAttribute('data-ty') === f.ty) && toks.every(function (x) { return k.indexOf(x) >= 0; });
-        el.hidden = !ok; if (ok) n++;
+    if (!$('[data-group]', index()).some(function (b) { return b.dataset.group === group; })) group = '';
+
+    function syncIndex() {
+      orderButtons.forEach(function (button) {
+        button.setAttribute('aria-pressed', String(button.dataset.order === mode));
       });
-      groups.forEach(function (g) {
-        var has = !!$('[data-k]:not([hidden])', g);
-        g.hidden = !has;
-        var a = $('.jump a[href="#' + g.id + '"]', box); if (a) a.setAttribute('aria-disabled', String(!has));
+      indexes.forEach(function (nav) {
+        nav.hidden = nav.dataset.index !== mode;
+        $$('[data-group]', nav).forEach(function (button) {
+          button.setAttribute('aria-pressed', String(button.dataset.group === group));
+        });
       });
-      if (toks.length) $$('details[data-k]', box).forEach(function (el) { el.open = !el.hidden && n <= 3; });
-      if (count) count.innerHTML = t('显示 ' + n + ' / ' + total + ' 条', n + ' / ' + total + ' 件を表示');
-      if (empty) empty.hidden = n > 0;
-      if (push && window.history && history.replaceState) {
-        var v = q.value.trim();
-        try { history.replaceState(null, '', location.pathname + (v ? '?q=' + encodeURIComponent(v) : '')); } catch (e) { /* 忽略 */ }
+      var selected = $('[aria-pressed="true"]', index());
+      if (selected) {
+        var nav = index(), left = selected.getBoundingClientRect().left - nav.getBoundingClientRect().left + nav.scrollLeft;
+        if (left < nav.scrollLeft) nav.scrollLeft = left;
+        if (left + selected.offsetWidth > nav.scrollLeft + nav.clientWidth) {
+          nav.scrollLeft = left + selected.offsetWidth - nav.clientWidth;
+        }
       }
     }
-    $$('.chips[data-f]', box).forEach(function (grp) {
-      var key = grp.getAttribute('data-f');
-      grp.addEventListener('click', function (e) {
-        var b = e.target.closest('.chip'); if (!b) return;
-        f[key] = b.getAttribute('data-v');
-        $$('.chip', grp).forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); });
-        apply(false);
+    function saveUrl() {
+      var url = new URL(location.href), query = q.value.trim();
+      if (query) url.searchParams.set('q', query);
+      else url.searchParams.delete('q');
+      if (mode === 'romaji') url.searchParams.set('sort', mode);
+      else url.searchParams.delete('sort');
+      url.hash = group ? 'r-' + group : '';
+      history.replaceState(null, '', url);
+    }
+    function normalize(value) {
+      return value.normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g, function (c) {
+        return String.fromCharCode(c.charCodeAt(0) - 0x60);
+      });
+    }
+    function rowGroup(row) {
+      return mode === 'kana' || row[2] === 'k' ? row[3] : row[4][0] || 'other';
+    }
+    async function json(url, signal) {
+      var response = await fetch(url, { signal: signal });
+      if (!response.ok) throw new Error('Dictionary data: ' + response.status);
+      return response.json();
+    }
+    function showError() {
+      results.removeAttribute('aria-busy');
+      count.innerHTML = '';
+      error.hidden = false;
+      pager.hidden = true;
+    }
+    function draw(ids, batches, expand) {
+      var labels = new Map($$('[data-group]', index()).map(function (button) {
+        var key = button.dataset.group;
+        return [key, button.innerHTML + (mode === 'kana' && key !== 'kanji' ? '行' : '')];
+      }));
+      var sections = [];
+      ids.forEach(function (id) {
+        var row = rows[id], key = rowGroup(row), kind = row[2];
+        var current = sections[sections.length - 1];
+        if (!current || current.key !== key) {
+          current = { key: key, kind: kind, entries: [] };
+          sections.push(current);
+        }
+        var html = batches.get(Math.floor(id / size))[id % size];
+        current.entries.push(expand && kind === 'g' ? html.replace('<details ', '<details open ') : html);
+      });
+      results.innerHTML = sections.map(function (section) {
+        var html = section.entries.join('');
+        if (section.kind !== 'g') {
+          html = '<ol class="' + (section.kind === 'w' ? 'vlist' : 'kgrid') + '">' + html + '</ol>';
+        }
+        return '<section class="lx-group"><h2 lang="ja">' + labels.get(section.key) + '</h2>' + html + '</section>';
+      }).join('');
+    }
+    function revealResults(focus) {
+      var height = controls.getBoundingClientRect().height;
+      if (focus) results.focus({ preventScroll: true });
+      var top = results.getBoundingClientRect().top - height;
+      if (top < 0) window.scrollBy(0, top);
+    }
+    async function render(initial, reveal) {
+      if (!rows) return;
+      if (pending) pending.abort();
+      var controller = new AbortController();
+      pending = controller;
+      var tokens = normalize(q.value).split(/\s+/).filter(Boolean);
+      var matches = orders[mode].filter(function (id) {
+        var row = rows[id];
+        return (!filters.lv || row[1].split(' ').includes(filters.lv)) &&
+          (!filters.ty || row[2] === filters.ty) && (!group || rowGroup(row) === group) &&
+          tokens.every(function (token) { return row[0].includes(token); });
+      });
+      var pages = Math.max(1, Math.ceil(matches.length / size));
+      page = Math.max(0, Math.min(page, pages - 1));
+      var ids = matches.slice(page * size, (page + 1) * size);
+      error.hidden = empty.hidden = true;
+      try {
+        if (!(initial && mode === 'kana' && matches.length === rows.length)) {
+          results.setAttribute('aria-busy', 'true');
+          var batchIds = Array.from(new Set(ids.map(function (id) { return Math.floor(id / size); })));
+          var fetched = await Promise.all(batchIds.map(async function (batch) {
+            return [batch, await json(new URL(batch + '.json', indexUrl), controller.signal)];
+          }));
+          if (controller.signal.aborted) return;
+          draw(ids, new Map(fetched), tokens.length > 0 && matches.length <= 3);
+        }
+        results.removeAttribute('aria-busy');
+        count.innerHTML = t('显示 ' + matches.length + ' / ' + rows.length + ' 条', matches.length + ' / ' + rows.length + ' 件を表示');
+        empty.hidden = matches.length !== 0;
+        pager.hidden = pages < 2;
+        $('span', pager).textContent = (page + 1) + ' / ' + pages;
+        steps[0].disabled = page === 0;
+        steps[1].disabled = page + 1 === pages;
+        if (reveal) revealResults(reveal === 'page');
+      } catch (e) {
+        if (!controller.signal.aborted) {
+          controller.abort();
+          showError();
+        }
+      }
+    }
+    function changed(reveal) {
+      clearTimeout(delay);
+      page = 0;
+      saveUrl();
+      render(false, reveal);
+    }
+
+    syncIndex();
+    controls.addEventListener('click', function (event) {
+      var button = event.target.closest('button');
+      if (!button) return;
+      if (button.dataset.order) {
+        if (mode === button.dataset.order) return;
+        mode = button.dataset.order;
+        group = '';
+        syncIndex();
+      } else if (button.hasAttribute('data-group')) {
+        group = button.dataset.group;
+        syncIndex();
+      } else {
+        var chips = button.closest('[data-f]');
+        if (!chips) return;
+        filters[chips.dataset.f] = button.dataset.v;
+        $$('button', chips).forEach(function (item) {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+      }
+      changed(true);
+    });
+    q.addEventListener('input', function () {
+      clearTimeout(delay);
+      if (pending) pending.abort();
+      delay = setTimeout(function () { changed(true); }, 120);
+    });
+    steps.forEach(function (button) {
+      button.addEventListener('click', function () {
+        clearTimeout(delay);
+        page += +button.dataset.step;
+        render(false, 'page');
       });
     });
-    q.addEventListener('input', function () { apply(true); });
-    try { var init = new URLSearchParams(location.search).get('q'); if (init) q.value = init; } catch (e) { /* 旧浏览器忽略 */ }
-    apply(false);
+    $('[data-retry]', error).addEventListener('click', function () { location.reload(); });
+    results.setAttribute('aria-busy', 'true');
+    count.innerHTML = t('正在加载辞典…', '読み込み中…');
+    json(indexUrl).then(function (data) {
+      rows = data;
+      var kana = rows.map(function (_, id) { return id; });
+      var roman = kana.slice().sort(function (a, b) {
+        var x = rows[a][4] || (rows[a][2] === 'k' ? '~' : '{');
+        var y = rows[b][4] || (rows[b][2] === 'k' ? '~' : '{');
+        return x < y ? -1 : x > y ? 1 : a - b;
+      });
+      orders = { kana: kana, romaji: roman };
+      render(true);
+    }).catch(showError);
   }
 
   initLex();

@@ -6,6 +6,7 @@
 - 测验题的 4 个选项互不相同
 - dist/ 里的站内链接都指向存在的文件
 """
+import json
 import os
 import re
 import subprocess
@@ -86,29 +87,47 @@ for lv in levels:
 for name, want in (('たべる', 'taberu'), ('がっこう', 'gakkou'), ('しゃしん', 'shashin'), ('きょういく', 'kyouiku'), ('じゅんび', 'junbi'), ('ニチ', 'nichi')):
     if build.romaji(name) != want:
         err('罗马字转换', name, build.romaji(name), '≠', want)
-for f in ('dict/index.html', 'grammar/index.html'):
-    if not os.path.isfile(os.path.join(build.OUT, f)):
-        err('缺少页面', f)
-
 # 站内链接
 OUT = build.OUT
 n_links = 0
+
+
+def check_links(path, text, base):
+    global n_links
+    for m in re.finditer(r'(?:href|src)="([^"#]+)(?:#[^"]*)?"', text):
+        u = m.group(1)
+        if re.match(r'^[a-z]+:', u):
+            continue
+        target = os.path.join(OUT, u.lstrip('/')) if u.startswith('/') else os.path.normpath(os.path.join(base, u))
+        if u.endswith('/') or os.path.isdir(target):
+            target = os.path.join(target, 'index.html')
+        n_links += 1
+        if not os.path.isfile(target):
+            err('死链', os.path.relpath(path, OUT), '→', u)
+
+
+for section in ('dict', 'grammar'):
+    base = os.path.join(OUT, section)
+    with open(os.path.join(base, 'index.html'), encoding='utf-8') as page:
+        path = re.search(r'data-index-url="([^"]+)"', page.read()).group(1)
+    directory = os.path.dirname(os.path.join(base, path))
+    with open(os.path.join(base, path), encoding='utf-8') as index:
+        total = len(json.load(index))
+    for offset in range(0, total, build.LEX_PAGE_SIZE):
+        batch_path = os.path.join(directory, '%d.json' % (offset // build.LEX_PAGE_SIZE))
+        with open(batch_path, encoding='utf-8') as batch:
+            entries = json.load(batch)
+        if len(entries) != min(build.LEX_PAGE_SIZE, total - offset):
+            err('批次大小与索引不一致', batch_path)
+        check_links(batch_path, ''.join(entries), base)
+
 for base, _, files in os.walk(OUT):
     for f in files:
         if not f.endswith('.html'):
             continue
         p = os.path.join(base, f)
-        text = open(p, encoding='utf-8').read()
-        for m in re.finditer(r'(?:href|src)="([^"#]+)(?:#[^"]*)?"', text):
-            u = m.group(1)
-            if re.match(r'^[a-z]+:', u):
-                continue
-            target = os.path.join(OUT, u.lstrip('/')) if u.startswith('/') else os.path.normpath(os.path.join(base, u))
-            if u.endswith('/') or os.path.isdir(target):
-                target = os.path.join(target, 'index.html')
-            n_links += 1
-            if not os.path.isfile(target):
-                err('死链', os.path.relpath(p, OUT), '→', u)
+        with open(p, encoding='utf-8') as page:
+            check_links(p, page.read(), base)
 
 r = subprocess.run(['node', '--check', os.path.join(build.ROOT, 'assets', 'app.js')], capture_output=True, text=True)
 if r.returncode:
