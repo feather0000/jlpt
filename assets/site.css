@@ -330,6 +330,12 @@ a.lvb:hover{background:var(--tone);color:var(--on-tone)}
 .practice-picks input:checked+span{border-color:var(--tone);background:var(--tone);color:var(--on-tone)}
 .practice-actions,.practice-report{margin-top:16px}
 .practice-report .q-miss{margin:2px 0 8px}
+.mock-links{margin-top:12px}
+.mock-error{font-size:.88rem;color:var(--muted);margin-top:8px}
+.mock-passage{white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0;padding:10px 14px;border-left:3px solid var(--tone-soft);background:var(--paper);line-height:1.9}
+#mock mark{color:inherit;background:var(--tone-soft);text-decoration:underline;text-underline-offset:3px}
+.mock-opts{grid-template-columns:minmax(0,1fr)}
+.mock-opts .opt{overflow-wrap:anywhere}
 
 @media(max-width:1100px){.shelf{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 20px}.entries{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){

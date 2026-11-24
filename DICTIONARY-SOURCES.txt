@@ -34,3 +34,9 @@ in content/grammar-zh.json, content/grammar-examples-zh/ and
 content/grammar-details-zh/ are adaptations of OpenJLPT under CC BY-SA 4.0.
 The source English text is available in the Japanese UI.
 JLPT levels are community estimates for study reference.
+
+The mock-practice sets use the corresponding CC BY-SA 4.0 vocabulary,
+readings and glosses for some questions. Japanese source examples from Tatoeba
+are marked with a link to the original sentence and its contributor on the
+practice card. Those examples may be shortened, stripped of furigana, or
+adapted as fill-in-the-blank questions.

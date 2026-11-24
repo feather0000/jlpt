@@ -174,7 +174,39 @@ for paper, answers in keys.items():
     if paper[:2] in ('n1', 'n2') and len(answers['l'][-1]) != 4:
         err(paper, '听力综合理解应有 4 个答题位置')
 
-for script in ('app.js', 'practice.js'):
+mock_root = os.path.join(OUT, 'practice', 'mock')
+with open(os.path.join(mock_root, 'index.html'), encoding='utf-8') as page:
+    mock = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page.read(), re.S).group(1))['mock']
+if set(mock) != {kind for kind, *_ in build.mock_bank.TYPES}:
+    err('模拟题型覆盖不全')
+for kind, _, _, applicable in build.mock_bank.TYPES:
+    seen = set()
+    by_level = mock[kind]['levels']
+    if set(by_level) != {'n' + n for n in applicable}:
+        err(kind, '模拟题级别和适用题型不一致')
+    for lid, data in by_level.items():
+        count = 0
+        for file in data['files']:
+            with open(os.path.join(mock_root, file), encoding='utf-8') as stream:
+                items = json.load(stream)
+            count += len(items)
+            if len(items) != build.mock_bank.SET_SIZE:
+                err(lid, kind, '组别题数不正确', file)
+            for item in items:
+                answers = item['opts']
+                if len(answers) != 4 or len(set(answers)) != 4 or not 0 <= item['a'] < 4 or not item['why']:
+                    err(lid, kind, '选项或解析无效', item['q'])
+                    continue
+                key = build.mock_bank.fingerprint(kind, item, answers[item['a']])
+                if key in seen:
+                    err(lid, kind, '题干重复', item['q'])
+                seen.add(key)
+        if count != data['count']:
+            err(lid, kind, '清单题数不正确')
+    if len(seen) != build.mock_bank.QUESTIONS_PER_TYPE:
+        err(kind, '独立题目数不正确', len(seen))
+
+for script in ('app.js', 'practice.js', 'mock.js'):
     r = subprocess.run(['node', '--check', os.path.join(build.ROOT, 'assets', script)], capture_output=True, text=True)
     if r.returncode:
         err(script, '语法错误', r.stderr.strip())

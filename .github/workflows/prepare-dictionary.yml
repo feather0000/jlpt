@@ -11,6 +11,8 @@ on:
       - 'content/grammar-examples-zh/**'
       - 'content/grammar-details-zh/**'
       - 'content/practice-keys.json'
+      - 'content/mock_*.py'
+      - 'mock_bank.py'
       - 'import_dictionary.py'
       - 'verify.py'
 

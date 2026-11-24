@@ -16,6 +16,8 @@ import unicodedata
 from collections import Counter
 from itertools import groupby
 
+import mock_bank
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'dist')
 esc = html.escape
@@ -273,8 +275,10 @@ def quiz(lv, levels):
                 kw=kw,
                 g=[[ruby(q), [ruby(a)] + [ruby(x) for x in wrong], expl] for q, a, wrong, expl in lv['quiz']])
     body = ('<section class="quiz" id="quiz"><p class="nojs">%s</p></section>'
-            '<p class="quiz"><a class="btn ghost" href="../../practice/?level=%s">%s<span aria-hidden="true"> →</span></a></p>') % (
-        T('测验需要开启 JavaScript。', 'クイズには JavaScript が必要です。'), lv['id'], T('真题演练', '公式問題集で演習'))
+            '<p class="quiz today-go"><a class="btn ghost" href="../../practice/?level=%s">%s<span aria-hidden="true"> →</span></a>'
+            '<a class="btn ghost" href="../../practice/mock/?level=%s">%s<span aria-hidden="true"> →</span></a></p>') % (
+        T('测验需要开启 JavaScript。', 'クイズには JavaScript が必要です。'), lv['id'], T('真题演练', '公式問題集で演習'),
+        lv['id'], T('模拟题库', '模擬問題集'))
     page(lv, levels, 'quiz/', '测验', 'クイズ', '%s 小测验：词义、读音、汉字写法和语法，十题一组，带解说。' % lv['name'], body, data)
 
 
@@ -283,17 +287,37 @@ def practice():
         keys = json.load(source)
     body = ('<section class="quiz practice"><header class="lx-head">'
             '<div class="eyebrow"><span></span>%s</div><h1>%s</h1><p class="lead">%s</p></header>'
+            '<p class="mock-links"><a class="btn ghost" href="mock/">%s<span aria-hidden="true"> →</span></a></p>'
             '<div id="practice"><p class="nojs">%s</p></div>'
             '<p class="practice-source"><a href="https://www.jlpt.jp/samples/sampleindex.html" target="_blank" rel="noopener">%s</a></p>'
             '</section>') % (
         T('题库', '問題集'), T('真题演练', '公式問題集で演習'),
         T('选用 JLPT 官方 2012 年、2018 年问题集。打开官方题册，在本站计时作答。',
           '2012年版と2018年版のJLPT公式問題集を使います。公式の問題冊子を開き、このサイトで時間を計って解答します。'),
+        T('模拟题库', '模擬問題集'),
         T('开启 JavaScript 后可以使用计时答题卡。', '計時と解答にはJavaScriptが必要です。'),
         T('来源 · JLPT 官方网站', '出典 · 日本語能力試験公式ウェブサイト'))
     write('practice/index.html', shell('真题演练 · JLPT 学习站', '公式問題集で演習 · JLPT 学習サイト',
                                      'JLPT N5–N1 官方问题集演练，分科计时、答题和交卷核分。', 1, body,
                                      data={'practice': keys}, nav='practice', script='practice.js'))
+
+
+def mock_practice(levels, imported):
+    types = mock_bank.build_sets(levels, imported, write)
+    total = sum(entry['count'] for item in types.values() for entry in item['levels'].values())
+    title = T('模拟题库', '模擬問題集')
+    body = ('<section class="quiz practice"><header class="lx-head"><h1>%s</h1><p class="lead">%s</p></header>'
+            '<p class="mock-links"><a class="btn ghost" href="../">%s<span aria-hidden="true"> →</span></a></p>'
+            '<div id="mock"><noscript><p class="nojs">%s</p></noscript></div>'
+            '<p class="practice-source"><a href="https://www.jlpt.jp/e/guideline/testsections.html">%s</a> · '
+            '<a href="../../dictionary-sources.txt">%s</a></p></section>') % (
+        title,
+        T('N5–N1 共 %s 道非听力练习，按级别和题型选题。' % f'{total:,}', 'N5–N1の聴解を除く%s問。レベルと問題の種類を選んで練習できます。' % f'{total:,}'),
+        T('真题演练', '公式問題集で演習'), T('开启 JavaScript 后可以抽题。', '問題を解くにはJavaScriptが必要です。'),
+        T('JLPT 题型参考', 'JLPTの問題構成'), T('词汇素材来源与许可', '語彙素材の出典・ライセンス'))
+    write('practice/mock/index.html', shell('模拟题库 · JLPT 学习站', '模擬問題集 · JLPT 学習サイト',
+              'JLPT N5–N1 模拟题库，涵盖文字词汇、语法和阅读。', 2, body,
+              data={'mock': types}, nav='practice', script='mock.js'))
 
 
 # ---------- 辞典 / 语法词典（跨级别） ----------
@@ -702,6 +726,7 @@ def build():
     shutil.copyfile(os.path.join(ROOT, 'DICTIONARY-SOURCES.txt'), os.path.join(OUT, 'dictionary-sources.txt'))
     home(levels, (nw, nk, ng), level_rows)
     practice()
+    mock_practice(levels, imported)
     for lv in levels:
         rows = level_rows[lv['id']]
         hub(lv, levels, rows)
