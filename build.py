@@ -561,6 +561,11 @@ def grammar_pattern(value):
 def gdict_page(levels, imported):
     with open(os.path.join(ROOT, 'content', 'grammar-zh.json'), encoding='utf-8') as source:
         translations = json.load(source)
+    example_translations = {}
+    for lv in levels:
+        path = os.path.join(ROOT, 'content', 'grammar-examples-zh', lv['id'] + '.json')
+        with open(path, encoding='utf-8') as source:
+            example_translations[lv['id']] = json.load(source)
     ents = []
     for lv in levels:
         ents.extend((gkey(g), lv, i, g) for i, g in enumerate(lv['grammar'], 1))
@@ -574,8 +579,17 @@ def gdict_page(levels, imported):
     ents.sort(key=lambda t: (t[0], t[1]['id']))
     rows = []
     for key, lv, i, g in ents:
-        en = ' lang="en"' if i is None else ''
-        exs = ''.join('<li><span lang="ja">%s</span><span class="ex-zh"%s>%s</span></li>' % (ruby(a), en, esc(b)) for a, b in g['ex'])
+        glosses = {} if i else example_translations[lv['id']].get(g['id'], {})
+        examples = []
+        for sentence, original in g['ex']:
+            if i:
+                translation = esc(original)
+            else:
+                chinese = glosses.get(plain(sentence))
+                english = meaning_markup(original, 'en')
+                translation = T(esc(chinese), english) if chinese else english
+            examples.append('<li><span lang="ja">%s</span><span class="ex-zh">%s</span></li>' %
+                            (ruby(sentence), translation))
         note = '<p class="note"><b>%s</b>%s</p>' % (T('补充', '補足'), ruby(g['note'])) if g.get('note') else ''
         zh, ja = g.get('zh', ''), g.get('ja', '')
         if i:
@@ -599,7 +613,7 @@ def gdict_page(levels, imported):
             '<span class="lvb">{name}</span><span class="gd-m">{mean}</span></summary><div class="gd-body">'
             '<p class="gp-conn"><b>{cl}</b>{conn}</p><ul class="gp-ex">{exs}</ul>{note}'
             '<p class="gd-more"><a href="{href}">{link}<span aria-hidden="true"> →</span></a></p></div></details>').format(
-            lid=lv['id'], p=esc(g['p']), name=lv['name'], mean=mean, cl=T('接续', '接続'), conn=conn, exs=exs, note=note, href=href, link=link)
+            lid=lv['id'], p=esc(g['p']), name=lv['name'], mean=mean, cl=T('接续', '接続'), conn=conn, exs=''.join(examples), note=note, href=href, link=link)
         roman = romaji(key)
         alias = g.get('romaji', '')
         normalized = re.sub(r'[^a-z]', '', unicodedata.normalize('NFKD', alias.lower()))
