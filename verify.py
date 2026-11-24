@@ -12,6 +12,7 @@ import os
 import re
 import subprocess
 import sys
+from urllib.parse import urlsplit
 
 import build
 
@@ -96,9 +97,10 @@ n_links = 0
 def check_links(path, text, base):
     global n_links
     for m in re.finditer(r'(?:href|src)="([^"#]+)(?:#[^"]*)?"', text):
-        u = m.group(1)
-        if re.match(r'^[a-z]+:', u):
+        link = urlsplit(m.group(1))
+        if link.scheme or link.netloc or not link.path:
             continue
+        u = link.path
         target = os.path.join(OUT, u.lstrip('/')) if u.startswith('/') else os.path.normpath(os.path.join(base, u))
         if u.endswith('/') or os.path.isdir(target):
             target = os.path.join(target, 'index.html')
@@ -156,9 +158,26 @@ for base, _, files in os.walk(OUT):
         with open(p, encoding='utf-8') as page:
             check_links(p, page.read(), base)
 
-r = subprocess.run(['node', '--check', os.path.join(build.ROOT, 'assets', 'app.js')], capture_output=True, text=True)
-if r.returncode:
-    err('app.js 语法错误', r.stderr.strip())
+with open(os.path.join(OUT, 'practice', 'index.html'), encoding='utf-8') as page:
+    markup = page.read()
+keys = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', markup, re.S).group(1))['practice']
+if set(keys) != {'n%d-%d' % (n, year) for n in range(1, 6) for year in (2012, 2018)}:
+    err('真题题库应包含 N1–N5 两辑官方问题集')
+for paper, answers in keys.items():
+    for part in ('v', 'g', 'r'):
+        if not re.fullmatch(r'[1-4]+', answers[part]):
+            err(paper, part, '缺少有效的答案选项')
+    limit = {'n1': [4, 4, 4, 3, 4], 'n2': [4, 4, 4, 3, 4], 'n3': [4, 4, 4, 3, 3]}.get(paper[:2], [4, 4, 3, 3])
+    if (len(answers['l']) != len(limit) or
+        any(not re.fullmatch(r'[1-%d]+' % n, group) for n, group in zip(limit, answers['l']))):
+        err(paper, '听力大题或答案选项异常')
+    if paper[:2] in ('n1', 'n2') and len(answers['l'][-1]) != 4:
+        err(paper, '听力综合理解应有 4 个答题位置')
+
+for script in ('app.js', 'practice.js'):
+    r = subprocess.run(['node', '--check', os.path.join(build.ROOT, 'assets', script)], capture_output=True, text=True)
+    if r.returncode:
+        err(script, '语法错误', r.stderr.strip())
 
 for e in errors:
     print('FAIL', e)

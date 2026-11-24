@@ -81,13 +81,15 @@ HEADJS = ("<script>(function(){var d=document.documentElement,g=function(k){try{
           "d.setAttribute('data-theme',t);d.setAttribute('data-ui',g('jlpt-ui')==='ja'?'ja':'zh');d.setAttribute('data-furi',g('jlpt-furi')==='off'?'off':'on')})()</script>")
 
 
-def shell(title_zh, title_ja, desc, depth, body, level=None, data=None, nav=None):
+def shell(title_zh, title_ja, desc, depth, body, level=None, data=None, nav=None, script=None):
     root = '../' * depth
     home = root or './'
-    sitenav = '<nav class="site-nav" aria-label="工具书">%s</nav>' % ''.join(
+    sitenav = '<nav class="site-nav" aria-label="学习工具">%s</nav>' % ''.join(
         '<a href="%s%s"%s>%s</a>' % (root, h, ' aria-current="page"' if nav == k else '', T(zh, ja))
-        for h, zh, ja, k in [('dict/', '辞典', '辞書', 'dict'), ('grammar/', '语法词典', '文法辞典', 'grammar')])
-    sources = ' <a href="%sdictionary-sources.txt">%s</a>' % (root, T('辞典来源与许可', '辞書の出典・ライセンス')) if nav else ''
+        for h, zh, ja, k in [('dict/', '辞典', '辞書', 'dict'), ('grammar/', '语法词典', '文法辞典', 'grammar'),
+                             ('practice/', '题库', '問題集', 'practice')])
+    sources = ' <a href="%sdictionary-sources.txt">%s</a>' % (root, T('辞典来源与许可', '辞書の出典・ライセンス')) if nav in ('dict', 'grammar') else ''
+    extra_script = '<script src="%sassets/%s"></script>\n' % (root, script) if script else ''
     tools = ('<div class="tools">'
              '<button type="button" id="ui" class="tool-btn"><span class="t-zh" lang="ja">日本語</span><span class="t-ja" lang="zh-Hans">中文</span></button>'
              '<button type="button" id="furi" class="tool-btn" aria-pressed="true" lang="ja">ふりがな</button>'
@@ -100,13 +102,13 @@ def shell(title_zh, title_ja, desc, depth, body, level=None, data=None, nav=None
             '<a class="skip" href="#main">%s</a>\n<div class="sheet">\n'
             '<header class="mast"><a class="brand" href="%s"><img class="brand-mark" src="%sassets/lingyu-mark.svg" alt="" width="38" height="38"> feather0<span>%s</span></a>%s%s</header>\n'
             '<main id="main">\n%s\n</main>\n'
-            '<footer><span>feather0 · %s</span><span>%s</span></footer>\n</div>\n%s\n<script src="%sassets/app.js"></script>\n</body>\n</html>\n') % (
+            '<footer><span>feather0 · %s</span><span>%s</span></footer>\n</div>\n%s\n<script src="%sassets/app.js"></script>\n%s</body>\n</html>\n') % (
         ' data-level="%s"' % level if level else '', esc(title_ja), HEADJS, esc(title_zh), esc(desc), root, root,
         T('跳到正文', '本文へ'), home, root, T('JLPT 学习站', 'JLPT 学習サイト'), sitenav, tools, body,
         T('JLPT 学习站', 'JLPT 学習サイト'),
         T('个人整理的备考资料，与 JLPT 主办机构无关。学习记录只保存在这台设备的浏览器里。',
           '個人で作成した学習資料で、JLPT の主催団体とは関係ありません。学習記録はこの端末のブラウザにのみ保存されます。') + sources,
-        embed(data) if data is not None else '', root)
+        embed(data) if data is not None else '', root, extra_script)
 
 
 def write(path, text):
@@ -270,8 +272,28 @@ def quiz(lv, levels):
                 v=[[w, r, zh, ruby(ex), exzh] for w, r, _, zh, ex, exzh in lv['vocab']],
                 kw=kw,
                 g=[[ruby(q), [ruby(a)] + [ruby(x) for x in wrong], expl] for q, a, wrong, expl in lv['quiz']])
-    body = '<section class="quiz" id="quiz"><p class="nojs">%s</p></section>' % T('测验需要开启 JavaScript。', 'クイズには JavaScript が必要です。')
+    body = ('<section class="quiz" id="quiz"><p class="nojs">%s</p></section>'
+            '<p class="quiz"><a class="btn ghost" href="../../practice/?level=%s">%s<span aria-hidden="true"> →</span></a></p>') % (
+        T('测验需要开启 JavaScript。', 'クイズには JavaScript が必要です。'), lv['id'], T('真题演练', '公式問題集で演習'))
     page(lv, levels, 'quiz/', '测验', 'クイズ', '%s 小测验：词义、读音、汉字写法和语法，十题一组，带解说。' % lv['name'], body, data)
+
+
+def practice():
+    with open(os.path.join(ROOT, 'content', 'practice-keys.json'), encoding='utf-8') as source:
+        keys = json.load(source)
+    body = ('<section class="quiz practice"><header class="lx-head">'
+            '<div class="eyebrow"><span></span>%s</div><h1>%s</h1><p class="lead">%s</p></header>'
+            '<div id="practice"><p class="nojs">%s</p></div>'
+            '<p class="practice-source"><a href="https://www.jlpt.jp/samples/sampleindex.html" target="_blank" rel="noopener">%s</a></p>'
+            '</section>') % (
+        T('题库', '問題集'), T('真题演练', '公式問題集で演習'),
+        T('选用 JLPT 官方 2012 年、2018 年问题集。打开官方题册，在本站计时作答。',
+          '2012年版と2018年版のJLPT公式問題集を使います。公式の問題冊子を開き、このサイトで時間を計って解答します。'),
+        T('开启 JavaScript 后可以使用计时答题卡。', '計時と解答にはJavaScriptが必要です。'),
+        T('来源 · JLPT 官方网站', '出典 · 日本語能力試験公式ウェブサイト'))
+    write('practice/index.html', shell('真题演练 · JLPT 学习站', '公式問題集で演習 · JLPT 学習サイト',
+                                     'JLPT N5–N1 官方问题集演练，分科计时、答题和交卷核分。', 1, body,
+                                     data={'practice': keys}, nav='practice', script='practice.js'))
 
 
 # ---------- 辞典 / 语法词典（跨级别） ----------
@@ -679,6 +701,7 @@ def build():
     ng = gdict_page(levels, imported, level_rows)
     shutil.copyfile(os.path.join(ROOT, 'DICTIONARY-SOURCES.txt'), os.path.join(OUT, 'dictionary-sources.txt'))
     home(levels, (nw, nk, ng), level_rows)
+    practice()
     for lv in levels:
         rows = level_rows[lv['id']]
         hub(lv, levels, rows)
@@ -694,7 +717,8 @@ def build():
     # 404 可能出现在任意深度，资源用站点绝对路径
     write('404.html', shell('页面不存在 · JLPT 学习站', 'ページが見つかりません · JLPT 学習サイト', '页面不存在', 0, nf)
           .replace('href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace('<a class="brand" href="./"', '<a class="brand" href="/"')
-          .replace('href="dict/"', 'href="/dict/"').replace('href="grammar/"', 'href="/grammar/"'))
+          .replace('href="dict/"', 'href="/dict/"').replace('href="grammar/"', 'href="/grammar/"')
+          .replace('href="practice/"', 'href="/practice/"'))
     n = sum(len(files) for _, _, files in os.walk(OUT))
     print('built %d files → dist/ ; 辞典 %d 词 %d 字 · 语法词典 %d 条 ; ' % (n, nw, nk, ng) + ' | '.join('%s: %d词 %d字 %d语法 %d题' % (
         lv['name'], len(level_rows[lv['id']]['w']), len(level_rows[lv['id']]['k']), len(level_rows[lv['id']]['g']), len(lv['quiz'])) for lv in levels))

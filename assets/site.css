@@ -305,6 +305,32 @@ a.lvb:hover{background:var(--tone);color:var(--on-tone)}
 .q-miss .ans{color:var(--good);font-weight:600}
 .nojs{color:var(--muted)}
 
+/* 真题演练 */
+.practice .lx-head{padding-top:0}
+.practice-title{font:700 1.25rem/1.5 var(--serif-jp);margin-bottom:6px}
+.practice-fields,.practice-links{display:flex;flex-wrap:wrap;gap:8px 14px;margin:14px 0}
+.practice-fields label{display:grid;gap:4px;color:var(--muted);font-size:.88rem}
+.practice-fields select{min-height:40px;padding:4px 12px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink);font:inherit}
+.practice-sections{list-style:none;margin:12px 0 18px;padding:0;border-top:1px solid var(--line-2)}
+.practice-sections li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line-2)}
+.practice-sections p,.practice-source{font-size:.86rem;color:var(--muted)}
+.practice-source{margin-top:16px}
+.practice-source a{text-decoration:underline;text-underline-offset:3px}
+.practice-progress{position:sticky;top:0;z-index:3;margin-top:12px;padding:8px 0;background:var(--paper)}
+.practice-progress time{font-weight:700;color:var(--ink)}
+.practice-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px;min-width:0;margin:16px 0 0;padding:0;border:0}
+.practice-group legend{width:100%;padding:4px 0;border-bottom:1px solid var(--line);font-weight:700}
+.practice-row{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:4px 0;border-bottom:1px solid var(--line-2);font-variant-numeric:tabular-nums}
+.practice-picks{display:flex;gap:5px}
+.practice-picks label{position:relative;cursor:pointer}
+.practice-picks input{position:absolute;width:1px;height:1px;margin:0;opacity:0}
+.practice-picks label span{display:grid;place-items:center;min-width:36px;min-height:36px;border:1px solid var(--line);border-radius:3px;background:var(--paper)}
+.practice-picks label:hover span,.practice-picks input:focus-visible+span{border-color:var(--tone)}
+.practice-picks input:focus-visible+span{outline:3px solid var(--tone);outline-offset:2px}
+.practice-picks input:checked+span{border-color:var(--tone);background:var(--tone);color:var(--on-tone)}
+.practice-actions,.practice-report{margin-top:16px}
+.practice-report .q-miss{margin:2px 0 8px}
+
 @media(max-width:1100px){.shelf{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 20px}.entries{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){
   .vrow{grid-template-columns:minmax(0,1fr) 10px;gap:2px 12px}
@@ -317,6 +343,8 @@ a.lvb:hover{background:var(--tone);color:var(--on-tone)}
   .shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px}
   .plate{padding:10px 12px}
   .opts{grid-template-columns:1fr}
+  .practice-group{grid-template-columns:minmax(0,1fr)}
+  .practice-picks label span{min-width:42px;min-height:42px}
   .mast{min-height:60px;flex-wrap:wrap}
   .site-nav{order:3;width:100%;margin:0;border-top:1px solid var(--line-2)}
   .lx-tools .search.big{min-height:42px;padding:5px 10px;font-size:1rem}

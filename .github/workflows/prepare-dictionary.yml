@@ -10,6 +10,7 @@ on:
       - 'content/grammar-zh.json'
       - 'content/grammar-examples-zh/**'
       - 'content/grammar-details-zh/**'
+      - 'content/practice-keys.json'
       - 'import_dictionary.py'
       - 'verify.py'
 
