@@ -202,9 +202,7 @@ footer{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;m
 kbd{font:600 .72rem var(--sans);padding:0 5px;border:1px solid var(--line);border-radius:3px}
 
 /* 语法 */
-.gp-toc{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 4px}
-.gp-toc a{display:inline-flex;align-items:center;min-height:36px;padding:2px 13px;border:1px solid var(--line);border-radius:18px;font-size:.88rem}
-.gp-toc a:hover{border-color:var(--tone);color:var(--tone)}
+.gp-linked .gp:not(:target){display:none}
 .gp{display:grid;grid-template-columns:minmax(0,1fr);max-width:54rem;padding:28px 0 26px;border-bottom:1px solid var(--line-2)}
 .gp header{display:flex;align-items:baseline;gap:14px}
 .gp-no{font:500 1.15rem var(--latin);color:var(--muted)}
