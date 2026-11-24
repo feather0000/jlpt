@@ -64,7 +64,7 @@
       var lv = el.getAttribute('data-prog') + ':', total = +el.getAttribute('data-total') || 1, n = 0;
       for (var id in srs) if (id.indexOf(lv) === 0 && srs[id][0] >= 1) n++;
       $('i', el).style.width = Math.min(100, Math.round(100 * n / total)) + '%';
-      $('.prog-t', el).innerHTML = t('已学 ', '学習済み ') + n + ' / ' + total;
+      $('.prog-t', el).innerHTML = t('卡片已学 ', 'カード学習済み ') + n + ' / ' + total;
     });
     $$('[data-today]').forEach(function (el) {
       var lv = el.getAttribute('data-today') + ':', total = (+el.getAttribute('data-v')) + (+el.getAttribute('data-k'));
@@ -101,26 +101,25 @@
 
   /* ---------- 列表 + 卡片（单词、汉字共用） ---------- */
   function initDeck(data) {
-    var root = $('#deck'), list = $('#list'), search = $('#search'), empty = $('#empty');
+    var root = $('#deck'), list = $('#list');
     if (!root || !list || !data || !data.items) return;
     var NEW = 10, items = data.items, kind = data.kind;
     var rows = {};
-    $$('[data-id]', list).forEach(function (li) { rows[li.getAttribute('data-id')] = li; });
     function paintRow(id) {
       var li = rows[id]; if (!li) return;
       var s = status(id); li.setAttribute('data-st', s);
       var dot = $('.st', li); if (dot) dot.title = ST[s][0] + ' / ' + ST[s][1];
     }
-    items.forEach(function (it) { paintRow(it.id); });
-
-    if (search) search.addEventListener('input', function () {
-      var q = search.value.trim().toLowerCase(), n = 0;
-      $$('[data-k]', list).forEach(function (li) {
-        var hit = !q || li.getAttribute('data-k').indexOf(q) >= 0;
-        li.hidden = !hit; if (hit) n++;
+    function paintRows() {
+      rows = {};
+      $$('[data-id]', list).forEach(function (li) {
+        var id = li.getAttribute('data-id');
+        rows[id] = li;
+        paintRow(id);
       });
-      if (empty) empty.hidden = n > 0;
-    });
+    }
+    paintRows();
+    list.addEventListener('jlpt:list-render', paintRows);
 
     var queue = [], cur = null, flipped = false, started = false;
     function tally() { var n = { 'new': 0, due: 0, learning: 0, known: 0 }; items.forEach(function (it) { n[status(it.id)]++; }); return n; }
@@ -197,19 +196,22 @@
       else if (flipped && (e.key === '1' || e.key === '2' || e.key === '3')) { e.preventDefault(); rate(+e.key - 1); }
     });
 
-    var segs = $$('.seg button');
+    var segs = $$('button[data-mode]'), listHash = '';
     function setMode(m, quiet) {
       var cards = m === 'cards';
       root.hidden = !cards; list.hidden = cards;
-      if (search) search.hidden = cards;
-      if (empty && cards) empty.hidden = true;
       segs.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-mode') === m)); });
       if (cards && !started) start();
       if (!quiet && window.history && history.replaceState) {
-        try { history.replaceState(null, '', cards ? '#cards' : location.pathname + location.search); } catch (e) { /* file:// 下忽略 */ }
+        if (cards && location.hash !== '#cards') listHash = location.hash;
+        try { history.replaceState(null, '', cards ? '#cards' : location.pathname + location.search + listHash); } catch (e) { /* file:// 下忽略 */ }
       }
     }
-    segs.forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
+    segs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (b.getAttribute('aria-pressed') !== 'true') setMode(b.getAttribute('data-mode'));
+      });
+    });
     if (location.hash === '#cards') setMode('cards', true);
     window.addEventListener('hashchange', function () { setMode(location.hash === '#cards' ? 'cards' : 'list', true); });
   }
@@ -359,9 +361,10 @@
     function index() {
       return indexes.find(function (nav) { return nav.dataset.index === mode; });
     }
-    if (!$$('[data-group]', index()).some(function (b) { return b.dataset.group === group; })) group = '';
+    if (!index() || !$$('[data-group]', index()).some(function (b) { return b.dataset.group === group; })) group = '';
 
     function syncIndex() {
+      if (!indexes.length) return;
       orderButtons.forEach(function (button) {
         button.setAttribute('aria-pressed', String(button.dataset.order === mode));
       });
@@ -409,10 +412,13 @@
       pager.hidden = true;
     }
     function draw(ids, batches, expand) {
-      var labels = new Map($$('[data-group]', index()).map(function (button) {
-        var key = button.dataset.group;
-        return [key, button.innerHTML + (mode === 'kana' && key !== 'kanji' ? '行' : '')];
-      }));
+      var labels = new Map([['kanji', '漢字']]);
+      if (index()) {
+        $$('[data-group]', index()).forEach(function (button) {
+          var key = button.dataset.group;
+          labels.set(key, button.innerHTML + (mode === 'kana' && key !== 'kanji' ? '行' : ''));
+        });
+      }
       var sections = [];
       ids.forEach(function (id) {
         var row = rows[id], key = rowGroup(row), kind = row[2];
@@ -431,6 +437,7 @@
         }
         return '<section class="lx-group"><h2 lang="ja">' + labels.get(section.key) + '</h2>' + html + '</section>';
       }).join('');
+      results.dispatchEvent(new Event('jlpt:list-render', { bubbles: true }));
     }
     function revealResults(focus) {
       var height = controls.getBoundingClientRect().height;
