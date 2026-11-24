@@ -48,9 +48,11 @@
       const group = i + 1;
       const integrated = combined && group === 5;
       const choices = (level === 'n4' || level === 'n5' ? group > 2 : !integrated && group > 3) ? 3 : 4;
+      // 官方第一辑的第二大题音频由 sample2017 目录提供。
+      const audioBase = year === '2012' && group === 2 ? official + 'sample2017/' : base;
       return {title: text('大题 ' + group, '問題 ' + group), keys: answers, choices,
         numbers: integrated ? [1, 2, '3 (1)', '3 (2)'] : Array.from(answers, (_, n) => n + 1),
-        link: external(base + 'mp3/' + level.toUpperCase() + 'Q' + group + '.mp3',
+        link: external(audioBase + 'mp3/' + level.toUpperCase() + 'Q' + group + '.mp3',
           text('大题 ' + group + ' 音频', '問題 ' + group + ' の音声'))};
     });
     const blocks = combined ? [['vgr', parts], ['l', listening]] : [['v', parts.slice(0, 1)], ['gr', parts.slice(1)], ['l', listening]];
