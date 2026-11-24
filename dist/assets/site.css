@@ -266,7 +266,7 @@ a.lvb:hover{background:var(--tone);color:var(--on-tone)}
 .entries.two .entry{min-height:150px}
 
 /* 测验 */
-.quiz{max-width:46rem;margin-top:24px}
+.quiz{max-width:46rem;margin:24px auto 0}
 .q-setup h2,.q-result h3{font-size:1.06rem;letter-spacing:.06em}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 14px}
 .chip{min-height:40px;padding:4px 16px;border:1px solid var(--line);border-radius:20px;background:transparent;font-size:.92rem;cursor:pointer}
