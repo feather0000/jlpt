@@ -87,7 +87,7 @@ def similar_options(value, candidates, rng):
     return candidates[:3]
 
 
-def kanji_questions(bank, all_words, kind, rng):
+def kanji_questions(bank, all_words, kind, rng, reading_choices):
     yomi = defaultdict(set)
     for w in all_words:
         yomi[w['w']].add(w['r'])
@@ -99,7 +99,7 @@ def kanji_questions(bank, all_words, kind, rng):
         parts = example_context(w)
         if kind == 'reading':
             passage = '【%s】' % word if not parts else parts[0] + '【%s】' % word + parts[1]
-            wrong = similar_options(reading, [p['r'] for p in pool], rng)
+            wrong = reading_choices.wrong(word, reading)
             yield question('【　】のことばはどう読みますか。', reading, wrong, why, passage, w.get('tatoeba_id') if parts else None)
         else:
             wrong = similar_options(word, [p['w'] for p in pool if p['r'] != reading], rng)
@@ -342,7 +342,7 @@ def passage_questions(lid, kind):
             yield question(prompt, correct, wrong, '文章中与这道题对应的是「%s」。' % correct, passage)
 
 
-def build_sets(levels, imported, write):
+def build_sets(levels, imported, write, reading_choices):
     banks = vocabulary(levels, imported)
     all_words = [entry for bank in banks.values() for entry in bank]
     manifest = {}
@@ -359,7 +359,7 @@ def build_sets(levels, imported, write):
             bank = banks[lid][:]
             rng.shuffle(bank)
             if kind in ('reading', 'spelling'):
-                items = kanji_questions(bank, all_words, kind, rng)
+                items = kanji_questions(bank, all_words, kind, rng, reading_choices)
             elif kind == 'formation':
                 items = formation_questions()
             elif kind == 'context':

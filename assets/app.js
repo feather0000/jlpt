@@ -224,7 +224,11 @@
     var V = data.v.map(function (x) { return { w: x[0], r: x[1], m: x[2], x: x[3], xz: x[4] }; });
     var KW = data.kw.map(function (x) { return { w: x[0], r: x[1], m: x[2] }; });
     var seen = {}, READ = [];
-    V.concat(KW).forEach(function (o) { if (o.w !== o.r && !seen[o.w]) { seen[o.w] = 1; READ.push(o); } });
+    V.concat(KW).forEach(function (o) {
+      if (o.w === o.r || seen[o.w] || (data.reading && !data.reading[o.w])) return;
+      seen[o.w] = 1;
+      READ.push(o);
+    });
     var KAN = KW.filter(function (o) { return o.w !== o.r; });
     var TYPES = [
       ['mix', t('综合', '総合'), t('词义、读音、汉字、语法各出几题。', '意味・読み・表記・文法から少しずつ出題。')],
@@ -255,8 +259,9 @@
         esc(o.m), others(V, o, 'm', 3).map(function (x) { return esc(x.m); }), wordEx(o));
     }
     function qRead(o) {
+      var wrong = data.reading ? data.reading[o.w] : others(READ, o, 'r', 3);
       return mk(t('这个词怎么读？', 'この言葉の読み方は？'), '<p class="q-big" lang="ja">' + esc(o.w) + '</p>',
-        J(esc(o.r)), others(READ, o, 'r', 3).map(function (x) { return J(esc(x.r)); }), wordEx(o));
+        J(esc(o.r)), wrong.map(function (x) { return J(esc(x)); }), wordEx(o));
     }
     function qKanji(o) {
       return mk(t('用汉字怎么写？', '漢字でどう書く？'), '<p class="q-big" lang="ja">' + esc(o.r) + '</p><p class="q-sub">' + esc(o.m) + '</p>',

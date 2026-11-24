@@ -15,6 +15,7 @@ import sys
 from urllib.parse import urlsplit
 
 import build
+from content.mock_yomi import hira as reading_hira, plausible as plausible_reading
 
 KANJI = re.compile(r'[一-鿿々]')
 KANA = re.compile(r'^[ぁ-ゖァ-ー・（）]+$')
@@ -179,6 +180,38 @@ with open(os.path.join(mock_root, 'index.html'), encoding='utf-8') as page:
     mock = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page.read(), re.S).group(1))['mock']
 if set(mock) != {kind for kind, *_ in build.mock_bank.TYPES}:
     err('模拟题型覆盖不全')
+
+reading_choices = build.ReadingChoices(levels, build.dictionary_data(levels))
+
+
+def check_reading_options(where, word, correct, wrong):
+    choices = {reading_hira(value) for value in wrong}
+    valid = reading_choices.known(word) | {reading_hira(correct)}
+    if len(choices) != 3 or choices & valid or not all(plausible_reading(value) for value in choices):
+        err(where, word, '无效或多解的读音选项', correct, wrong)
+
+
+for lv in levels:
+    path = os.path.join(OUT, lv['id'], 'quiz', 'index.html')
+    with open(path, encoding='utf-8') as page:
+        quiz = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page.read(), re.S).group(1))
+    primary = {}
+    for word, reading, *_ in quiz['v'] + quiz['kw']:
+        primary.setdefault(word, reading)
+    if len(quiz['reading']) < 10:
+        err(lv['id'], '小测验缺少足够的汉字读音题')
+    for word, wrong in quiz['reading'].items():
+        check_reading_options(lv['id'], word, primary[word], wrong)
+
+for word, reading, expected in (
+    ('学校', 'がっこう', ['がくこう', 'がっこ', 'がっきょう']),
+    ('鉛筆', 'えんぴつ', ['えんひつ', 'えんびつ', 'えいぴつ']),
+    ('大げさ', 'おおげさ', ['だいげさ', 'たいげさ', 'おげさ']),
+    ('明日', 'あした', []),
+):
+    if reading_choices.wrong(word, reading) != expected:
+        err('读音干扰项回归', word)
+
 for kind, _, _, applicable in build.mock_bank.TYPES:
     seen = set()
     by_level = mock[kind]['levels']
@@ -198,6 +231,10 @@ for kind, _, _, applicable in build.mock_bank.TYPES:
                     err(lid, kind, '选项或解析无效', item['q'])
                     continue
                 key = build.mock_bank.fingerprint(kind, item, answers[item['a']])
+                if kind == 'reading':
+                    word = re.search(r'【([^】]+)】', item['p']).group(1)
+                    check_reading_options(lid, word, answers[item['a']],
+                                          [value for i, value in enumerate(answers) if i != item['a']])
                 if key in seen:
                     err(lid, kind, '题干重复', item['q'])
                 seen.add(key)

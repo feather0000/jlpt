@@ -17,6 +17,7 @@ from collections import Counter
 from itertools import groupby
 
 import mock_bank
+from content.mock_yomi import ReadingChoices
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'dist')
@@ -263,7 +264,7 @@ def grammar(lv, levels, rows):
     page(lv, levels, 'grammar/', '语法', '文法', '%s 语法：句型的接续、中日文说明和带注音的例句。' % lv['name'], body)
 
 
-def quiz(lv, levels):
+def quiz(lv, levels, reading_choices):
     kw, seen = [], set()
     for _, _, _, _, ws in lv['kanji']:
         for w, r, z in ws:
@@ -274,6 +275,13 @@ def quiz(lv, levels):
                 v=[[w, r, zh, ruby(ex), exzh] for w, r, _, zh, ex, exzh in lv['vocab']],
                 kw=kw,
                 g=[[ruby(q), [ruby(a)] + [ruby(x) for x in wrong], expl] for q, a, wrong, expl in lv['quiz']])
+    data['reading'] = {}
+    for w, r, *_ in data['v'] + kw:
+        if w in data['reading']:
+            continue
+        wrong = reading_choices.wrong(w, r)
+        if len(wrong) == 3:
+            data['reading'][w] = wrong
     body = ('<section class="quiz" id="quiz"><p class="nojs">%s</p></section>'
             '<p class="quiz today-go"><a class="btn ghost" href="../../practice/?level=%s">%s<span aria-hidden="true"> →</span></a>'
             '<a class="btn ghost" href="../../practice/mock/?level=%s">%s<span aria-hidden="true"> →</span></a></p>') % (
@@ -302,8 +310,8 @@ def practice():
                                      data={'practice': keys}, nav='practice', script='practice.js'))
 
 
-def mock_practice(levels, imported):
-    types = mock_bank.build_sets(levels, imported, write)
+def mock_practice(levels, imported, reading_choices):
+    types = mock_bank.build_sets(levels, imported, write, reading_choices)
     total = sum(entry['count'] for item in types.values() for entry in item['levels'].values())
     title = T('模拟题库', '模擬問題集')
     body = ('<section class="quiz practice"><header class="lx-head"><h1>%s</h1><p class="lead">%s</p></header>'
@@ -717,6 +725,7 @@ def gdict_page(levels, imported, level_rows):
 def build():
     levels = load_levels()
     imported = dictionary_data(levels)
+    reading_choices = ReadingChoices(levels, imported)
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
@@ -726,14 +735,14 @@ def build():
     shutil.copyfile(os.path.join(ROOT, 'DICTIONARY-SOURCES.txt'), os.path.join(OUT, 'dictionary-sources.txt'))
     home(levels, (nw, nk, ng), level_rows)
     practice()
-    mock_practice(levels, imported)
+    mock_practice(levels, imported, reading_choices)
     for lv in levels:
         rows = level_rows[lv['id']]
         hub(lv, levels, rows)
         vocab(lv, levels, rows['w'])
         kanji(lv, levels, rows['k'])
         grammar(lv, levels, rows['g'])
-        quiz(lv, levels)
+        quiz(lv, levels, reading_choices)
     nf = ('<div class="intro nf"><div class="eyebrow"><span></span>404</div><h1>%s</h1><p>%s</p>'
           '<p><a class="btn" href="/">%s</a></p></div>') % (
         T('页面不存在', 'ページが見つかりません'),
