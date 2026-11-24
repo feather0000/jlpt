@@ -9,6 +9,7 @@ on:
       - 'build.py'
       - 'content/grammar-zh.json'
       - 'content/grammar-examples-zh/**'
+      - 'content/grammar-details-zh/**'
       - 'import_dictionary.py'
       - 'verify.py'
 

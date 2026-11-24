@@ -562,10 +562,15 @@ def gdict_page(levels, imported):
     with open(os.path.join(ROOT, 'content', 'grammar-zh.json'), encoding='utf-8') as source:
         translations = json.load(source)
     example_translations = {}
+    detail_translations = {}
     for lv in levels:
-        path = os.path.join(ROOT, 'content', 'grammar-examples-zh', lv['id'] + '.json')
+        lid = lv['id']
+        path = os.path.join(ROOT, 'content', 'grammar-examples-zh', lid + '.json')
         with open(path, encoding='utf-8') as source:
-            example_translations[lv['id']] = json.load(source)
+            example_translations[lid] = json.load(source)
+        path = os.path.join(ROOT, 'content', 'grammar-details-zh', lid + '.json')
+        with open(path, encoding='utf-8') as source:
+            detail_translations[lid] = json.load(source)
     ents = []
     for lv in levels:
         ents.extend((gkey(g), lv, i, g) for i, g in enumerate(lv['grammar'], 1))
@@ -580,6 +585,7 @@ def gdict_page(levels, imported):
     rows = []
     for key, lv, i, g in ents:
         glosses = {} if i else example_translations[lv['id']].get(g['id'], {})
+        details = {} if i else detail_translations[lv['id']].get(g['id'], {})
         examples = []
         for sentence, original in g['ex']:
             if i:
@@ -590,7 +596,14 @@ def gdict_page(levels, imported):
                 translation = T(esc(chinese), english) if chinese else english
             examples.append('<li><span lang="ja">%s</span><span class="ex-zh">%s</span></li>' %
                             (ruby(sentence), translation))
-        note = '<p class="note"><b>%s</b>%s</p>' % (T('补充', '補足'), ruby(g['note'])) if g.get('note') else ''
+        note = ''
+        if g.get('note'):
+            if i:
+                note_text = ruby(g['note'])
+            else:
+                original_note = meaning_markup(g['note'], 'en')
+                note_text = T(ruby(details['note']), original_note) if details.get('note') else original_note
+            note = '<p class="note"><b>%s</b>%s</p>' % (T('补充', '補足'), note_text)
         zh, ja = g.get('zh', ''), g.get('ja', '')
         if i:
             mean = T(esc(zh), esc(ja))
@@ -602,6 +615,8 @@ def gdict_page(levels, imported):
             else:
                 mean = meaning_markup(g['en'], 'en')
         conn = T(esc(g['conn']), esc(conn_ja(g['conn']))) if i else meaning_markup(g['conn'], 'en')
+        if details.get('conn'):
+            conn = T(esc(details['conn']), conn)
         if i:
             href = '../%s/grammar/#g%d' % (lv['id'], i)
             link = T('在 %s 语法页查看' % lv['name'], '%s 文法ページで見る' % lv['name'])
@@ -617,7 +632,7 @@ def gdict_page(levels, imported):
         roman = romaji(key)
         alias = g.get('romaji', '')
         normalized = re.sub(r'[^a-z]', '', unicodedata.normalize('NFKD', alias.lower()))
-        rows.append((search_key(g['p'], g.get('yomi', ''), key, roman, alias, normalized, zh, ja, g.get('en', ''), g['conn']),
+        rows.append((search_key(g['p'], g.get('yomi', ''), key, roman, alias, normalized, zh, ja, g.get('en', ''), g['conn'], details.get('conn', '')),
                      lv['id'], 'g', kana_row(key), normalized or roman, entry))
     rows.sort(key=lambda row: ROW_ORDER[row[3]])
     lead = T('收录 N5–N1 的 %d 个句型，点开可看接续和例句。级别仅供参考。' % len(ents),
