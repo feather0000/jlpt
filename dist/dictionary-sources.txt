@@ -29,7 +29,8 @@ Those glosses were generated with AI assistance and have varying review coverage
 
 Changes here: imported and selected fields and examples, joined Chinese glosses
 to JLPT entries, converted furigana, and combined the data with curated entries.
-Simplified Chinese grammar glosses in content/grammar-zh.json are adaptations
-of OpenJLPT under CC BY-SA 4.0. Imported formations and example translations
-retain their original English text.
+Simplified Chinese grammar glosses and example translations in
+content/grammar-zh.json and content/grammar-examples-zh/ are adaptations of
+OpenJLPT under CC BY-SA 4.0. Imported formations retain their original English
+text. The English translations of the examples are shown in the Japanese UI.
 JLPT levels are community estimates for study reference.
