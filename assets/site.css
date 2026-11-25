@@ -157,6 +157,7 @@ footer{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;m
 .v-m{font-size:.98rem}
 .v-ex{font-size:1.04rem;line-height:2.05}
 .v-ex .ex-zh{margin-top:-2px}
+.ex-attribution{margin-left:.25em;text-decoration:underline;text-underline-offset:2px}
 .vrow .st{margin-top:12px}
 
 /* 汉字表 */

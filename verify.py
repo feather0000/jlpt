@@ -93,6 +93,15 @@ for name, want in (('たべる', 'taberu'), ('がっこう', 'gakkou'), ('しゃ
 # 站内链接
 OUT = build.OUT
 n_links = 0
+vocab_translations = build.load_vocab_examples()
+imported = build.dictionary_data(levels)
+visible_vocab_examples = [entry for entry in build.lexicon(levels, imported) if entry.get('tatoeba_id') and entry.get('x')]
+missing_vocab_examples = [entry['tatoeba_id'] for entry in visible_vocab_examples
+                          if not re.search(r'[㐀-鿿]', (build.vocab_example(entry, vocab_translations) or {}).get('zh', ''))]
+if missing_vocab_examples:
+    err('词汇例句缺中文译文', len(missing_vocab_examples), missing_vocab_examples[:12])
+else:
+    print('已核对 %d 条词汇辞典中文例句译文' % len(visible_vocab_examples))
 
 
 def check_links(path, text, base):
@@ -130,6 +139,12 @@ def check_listing(section, expected=None, cards=None):
             err('批次大小与索引不一致', batch_path)
         batch_markup = ''.join(entries)
         check_links(batch_path, batch_markup, base)
+        if section == 'dict' or section.endswith('/vocab'):
+            example_spans = re.findall(r'<span lang="ja" data-tatoeba-id="\d+">.*?</span><span class="ex-zh" lang="([^"]+)">',
+                                       batch_markup, re.S)
+            if (len(example_spans) != batch_markup.count('data-tatoeba-id=') or
+                    any(language != 'zh-Hans' for language in example_spans)):
+                err(section, '词汇例句未渲染中文译文', batch_path)
         for anchor in re.findall(r'href="#(g\d+)"', batch_markup):
             if 'id="%s"' % anchor not in markup:
                 err(section, '找不到语法锚点', anchor)
@@ -181,7 +196,7 @@ with open(os.path.join(mock_root, 'index.html'), encoding='utf-8') as page:
 if set(mock) != {kind for kind, *_ in build.mock_bank.TYPES}:
     err('模拟题型覆盖不全')
 
-reading_choices = build.ReadingChoices(levels, build.dictionary_data(levels))
+reading_choices = build.ReadingChoices(levels, imported)
 
 
 def check_reading_options(where, word, correct, wrong):

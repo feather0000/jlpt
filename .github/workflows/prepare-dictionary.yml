@@ -10,10 +10,12 @@ on:
       - 'content/grammar-zh.json'
       - 'content/grammar-examples-zh/**'
       - 'content/grammar-details-zh/**'
+      - 'content/vocab-examples-zh.json'
       - 'content/practice-keys.json'
       - 'content/mock_*.py'
       - 'mock_bank.py'
       - 'import_dictionary.py'
+      - 'translate_vocab_examples.py'
       - 'verify.py'
 
 permissions:
@@ -22,7 +24,7 @@ permissions:
 jobs:
   import-dictionary:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Download and verify input data
@@ -33,14 +35,32 @@ jobs:
           curl --fail --silent --show-error --location --retry 2 --output "$RUNNER_TEMP/tomoshi.db.zst" https://github.com/tomoshi-app/tomoshi-dict-data/releases/download/v2026-11-16/tomoshi-dict-open.db.zst
           echo "793d26a8963bff8b4dc39e83190d6f1608449f25aa5a8b5f9163c44e8c39b684  $RUNNER_TEMP/tomoshi.db.zst" | sha256sum -c
           zstd --decompress "$RUNNER_TEMP/tomoshi.db.zst" -o "$RUNNER_TEMP/tomoshi.db"
-      - name: Generate and verify the public dictionary
+      - name: Import the pinned dictionary
         run: |
           python3 import_dictionary.py --openjlpt "$RUNNER_TEMP/openjlpt" --tomoshi "$RUNNER_TEMP/tomoshi.db"
+      - name: Prepare Chinese vocabulary example translations
+        if: hashFiles('content/vocab-examples-zh.json') == ''
+        run: |
+          input="$RUNNER_TEMP/jlpt-vocab-zh"
+          mkdir -p "$input/model" "$input/tatoeba"
+          model_url=https://huggingface.co/gn64/M2M100_418M_CTranslate2/resolve/645286f77168c1c18d75c1b3274c062eca6eca7b
+          for file in config.json shared_vocabulary.json sentencepiece.bpe.model model.bin; do
+            curl --fail --silent --show-error --location --retry 3 --retry-all-errors --max-time 240 --output "$input/model/$file" "$model_url/$file"
+          done
+          echo "a1826980fc5c037e69c7ac94fcb56c03001a66f380eb71863cc0a3879e71421b  $input/model/model.bin" | sha256sum -c
+          for file in jpn/jpn_sentences.tsv.bz2 jpn/jpn-cmn_links.tsv.bz2 cmn/cmn_sentences_detailed.tsv.bz2; do
+            curl --fail --silent --show-error --location --retry 3 --retry-all-errors --max-time 120 --output "$input/tatoeba/${file##*/}" "https://downloads.tatoeba.org/exports/per_language/$file"
+          done
+          python3 -m venv "$input/venv"
+          "$input/venv/bin/python" -m pip install --disable-pip-version-check --quiet ctranslate2==4.6.0 sentencepiece==0.2.1 opencc-python-reimplemented==0.1.7
+          "$input/venv/bin/python" translate_vocab_examples.py --tatoeba "$input/tatoeba" --model "$input/model"
+      - name: Generate and verify the public dictionary
+        run: |
           python3 verify.py
           sha256sum content/dictionary/n?.json
       - name: Commit the verified dictionary on the staging branch
         run: |
-          git add content/dictionary dist
+          git add content/dictionary content/vocab-examples-zh.json dist
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Generate the localized JLPT dictionaries'
             git push origin HEAD:refs/heads/dictionary-import

@@ -60,6 +60,25 @@ def plain(s):
     return RUBY.sub(lambda m: m.group(1), s)
 
 
+def example_digest(sentence):
+    rendered = unicodedata.normalize('NFC', plain(sentence)).strip()
+    return hashlib.sha256(rendered.encode('utf-8')).hexdigest()[:16]
+
+
+def load_vocab_examples():
+    path = os.path.join(ROOT, 'content', 'vocab-examples-zh.json')
+    if not os.path.isfile(path):
+        return {}
+    with open(path, encoding='utf-8') as source:
+        return json.load(source)
+
+
+def vocab_example(e, translations):
+    if not (e.get('tatoeba_id') and e.get('x')):
+        return None
+    return translations.get('%d:%s' % (e['tatoeba_id'], example_digest(e['x'])))
+
+
 def T(zh, ja):
     """界面文字的中日两个版本，由 <html data-ui> 决定显示哪一个。"""
     return '<span class="t-zh">%s</span><span class="t-ja" lang="ja">%s</span>' % (zh, ja)
@@ -571,9 +590,17 @@ CARD_MARK = '<span class="st" aria-hidden="true"></span>'
 def word_entry(e, root, study_id=None):
     right = ''
     if e.get('x'):
-        en = ' lang="en"' if e.get('lang') else ''
         attribution = ' data-tatoeba-id="%d"' % e['tatoeba_id'] if e.get('tatoeba_id') else ''
-        right += '<span lang="ja"%s>%s</span><span class="ex-zh"%s>%s</span>' % (attribution, ruby(e['x']), en, esc(e.get('xz', '')))
+        localized = e.get('example_zh')
+        language = 'zh-Hans' if localized or not e.get('tatoeba_id') else 'en'
+        translation = esc(localized['zh'] if localized else e.get('xz', ''))
+        if localized and localized.get('id'):
+            credit = 'Tatoeba' + (' · ' + localized['author'] if localized.get('author') else '')
+            translation += (' <a class="ex-attribution" href="https://tatoeba.org/sentences/show/%d" '
+                            'title="%s" aria-label="%s" target="_blank" rel="noopener">↗</a>') % (
+                                localized['id'], esc(credit), esc(credit))
+        right += '<span lang="ja"%s>%s</span><span class="ex-zh" lang="%s">%s</span>' % (
+            attribution, ruby(e['x']), language, translation)
     if e['src']:
         right += '<span class="lx-src">%s%s</span>' % (T('汉字 ', '漢字 '), ''.join(
             '<a href="%s%s/kanji/" lang="ja">%s</a>' % (root, lid, esc(ch)) for ch, lid in e['src']))
@@ -588,6 +615,10 @@ def word_entry(e, root, study_id=None):
 
 def dict_page(levels, imported, level_rows):
     ents = lexicon(levels, imported)
+    translations = load_vocab_examples()
+    for entry in ents:
+        if entry.get('tatoeba_id'):
+            entry['example_zh'] = vocab_example(entry, translations)
     study_words = {lv['id']: {word_key(w, r): '%s:v:%s' % (lv['id'], w) for w, r, *_ in lv['vocab']}
                    for lv in levels}
     rows = []
