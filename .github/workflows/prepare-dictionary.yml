@@ -52,7 +52,7 @@ jobs:
             curl --fail --silent --show-error --location --retry 3 --retry-all-errors --max-time 120 --output "$input/tatoeba/${file##*/}" "https://downloads.tatoeba.org/exports/per_language/$file"
           done
           python3 -m venv "$input/venv"
-          "$input/venv/bin/python" -m pip install --disable-pip-version-check --quiet ctranslate2==4.6.0 sentencepiece==0.2.1 opencc-python-reimplemented==0.1.7
+          "$input/venv/bin/python" -m pip install --disable-pip-version-check --quiet ctranslate2==4.9.1 sentencepiece==0.2.1 opencc-python-reimplemented==0.1.7
           "$input/venv/bin/python" translate_vocab_examples.py --tatoeba "$input/tatoeba" --model "$input/model"
       - name: Generate and verify the public dictionary
         run: |
