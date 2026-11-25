@@ -27,13 +27,11 @@ Chinese sentence and its contributor. Traditional characters are converted
 to simplified characters where needed. Chinese translations without a
 Tatoeba attribution use the existing English parallel sentence and
 Helsinki-NLP's OPUS-MT en-zh (Apache 2.0, conversion by gaudi), or were
-reviewed against the original Japanese. Some retained translations were
-produced using Meta AI's M2M-100 (MIT, conversion by gn64).
+reviewed against the original Japanese. The machine translations have
+varying review coverage.
 https://tatoeba.org/en/downloads
 https://huggingface.co/Helsinki-NLP/opus-mt-en-zh
 https://huggingface.co/gaudi/opus-mt-en-zh-ctranslate2
-https://huggingface.co/facebook/m2m100_418M
-https://huggingface.co/gn64/M2M100_418M_CTranslate2
 
 Tomoshi (Y1Z), CC BY-SA 4.0
 https://github.com/tomoshi-app/tomoshi-dict-data
