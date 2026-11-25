@@ -20,6 +20,17 @@ examples. Its upstream sources include the following:
   Vocabulary examples carry a Tatoeba sentence ID in the HTML and source JSON.
   Contributor details: https://tatoeba.org/sentences/show/<sentence-id>
 
+Chinese vocabulary-example translations are keyed by the Tatoeba Japanese
+sentence ID and a digest of its text. Matched Mandarin translations from
+Tatoeba's Japanese–Mandarin export (CC BY 2.0 FR) show a link to the original
+Chinese sentence and its contributor. Traditional characters are converted
+to simplified characters where needed. The remaining translations use
+Meta AI's M2M-100 (MIT), int8 conversion by gn64. These machine translations
+have varying review coverage.
+https://tatoeba.org/en/downloads
+https://huggingface.co/facebook/m2m100_418M
+https://huggingface.co/gn64/M2M100_418M_CTranslate2
+
 Tomoshi (Y1Z), CC BY-SA 4.0
 https://github.com/tomoshi-app/tomoshi-dict-data
 https://github.com/tomoshi-app/tomoshi-dict-data/blob/main/NOTICE.md
