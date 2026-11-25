@@ -1,16 +1,29 @@
 #!/usr/bin/env python3
-"""Create the Chinese vocabulary-example snapshot from Tatoeba and M2M-100."""
+"""Create the Chinese vocabulary-example snapshot from Tatoeba and OPUS-MT."""
 
 import argparse
 import bz2
 import csv
 import json
 import re
-import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 import build
+
+
+REVIEWED = {
+    '234772': ('あ！まずい！ガソリンが切れてきた。', '啊，糟了！汽油快用完了。'),
+    '9628722': ('ああ、ああいうふうにやるんだな。', '哦，原来是那样做的啊。'),
+    '145720': ('信号が青に変わったわよ。', '红绿灯变绿了。'),
+    '226939': ('お前はまだ「青い」な。', '你还太嫩了。'),
+    '191561': ('愛とは夢にまで彼女を見ることだ。', '爱就是连做梦都会梦到她。'),
+    '91815': ('彼女はにっこり挨拶をした。', '她微笑着打了个招呼。'),
+    '177085': ('君は相変わらず健康そうに見える。', '你看起来还是一如既往地健康。'),
+    '234585': ('アイディアが足りないということはない。', '我们并不缺点子。'),
+    '76927': ('ああ、もしかして名前を呼ばれるのが恥ずかしいって？', '哦，难道别人叫你的名字会让你害羞？'),
+    '178739': ('君と彼とはどういう間柄なのだ。', '你跟他是什么关系？'),
+}
 
 
 def tsv(path):
@@ -18,13 +31,8 @@ def tsv(path):
         yield from csv.reader(stream, delimiter='\t', quoting=csv.QUOTE_NONE)
 
 
-def comparable(text):
-    return ''.join(unicodedata.normalize('NFKC', text).split())
-
-
-def usable(translation, japanese=''):
-    return (re.search(r'[㐀-鿿]', translation) and not re.search(r'[ぁ-ゖァ-ヺ]', translation)
-            and comparable(translation) != comparable(japanese))
+def usable(translation):
+    return re.search(r'[㐀-鿿]', translation) and not re.search(r'[ぁ-ゖァ-ヺ]', translation)
 
 
 def examples():
@@ -74,32 +82,26 @@ def translate(pending, model, simplify):
     import ctranslate2
     import sentencepiece
 
-    tokenizer = sentencepiece.SentencePieceProcessor(model_file=str(model / 'sentencepiece.bpe.model'))
+    source_tokenizer = sentencepiece.SentencePieceProcessor(model_file=str(model / 'source.spm'))
+    target_tokenizer = sentencepiece.SentencePieceProcessor(model_file=str(model / 'target.spm'))
     translator = ctranslate2.Translator(str(model), device='cpu', compute_type='int8', intra_threads=4)
 
-    def batch(texts, language):
-        source = [['__' + language + '__', *tokenizer.encode(text, out_type=str), '</s>'] for text in texts]
-        results = translator.translate_batch(source, target_prefix=[['__zh__']] * len(source),
-                                             beam_size=4, max_batch_size=512, batch_type='tokens',
+    def batch(texts):
+        source = [['>>cmn_Hans<<', *source_tokenizer.encode(text, out_type=str), '</s>'] for text in texts]
+        results = translator.translate_batch(source, beam_size=4, max_batch_size=512, batch_type='tokens',
                                              max_decoding_length=144, repetition_penalty=1.1)
-        return [simplify(tokenizer.decode(result.hypotheses[0][1:]).strip()) for result in results]
+        return [simplify(target_tokenizer.decode(result.hypotheses[0]).strip()) for result in results]
 
-    keys = sorted(pending, key=lambda key: len(pending[key][0]))
+    keys = sorted(pending, key=lambda key: len(pending[key][1]))
     translated = {}
     for start in range(0, len(keys), 256):
         group = keys[start:start + 256]
-        values = batch([pending[key][0] for key in group], 'ja')
+        values = batch([pending[key][1] for key in group])
         for key, value in zip(group, values):
-            if usable(value, pending[key][0]):
+            if usable(value):
                 translated[key] = {'zh': value}
         print('Vocabulary examples translated: %d/%d' % (start + len(group), len(keys)), flush=True)
 
-    retry = [key for key in keys if key not in translated]
-    if retry:
-        print('Recovering %d rejected outputs from the English parallel sentences' % len(retry), flush=True)
-        for key, value in zip(retry, batch([pending[key][1] for key in retry], 'en')):
-            if usable(value):
-                translated[key] = {'zh': value}
     return translated
 
 
@@ -112,11 +114,19 @@ def main():
 
     simplify = OpenCC('t2s').convert
     inputs = examples()
+    previous = build.load_vocab_examples()
     output = from_tatoeba(inputs, args.tatoeba, simplify)
     print('Tatoeba Chinese examples: %d/%d' % (len(output), len(inputs)), flush=True)
+    for key, (ja, _) in inputs.items():
+        reviewed = REVIEWED.get(key[0])
+        if reviewed and reviewed[0] == ja:
+            output[key] = {'zh': reviewed[1]}
     remaining = {key: value for key, value in inputs.items() if key not in output}
     if remaining:
         output.update(translate(remaining, args.model, simplify))
+    fallback = {key: previous[':'.join(key)] for key in inputs if key not in output and ':'.join(key) in previous}
+    output.update(fallback)
+    print('Retained %d previous translations for rejected outputs' % len(fallback), flush=True)
     missed = {key: inputs[key] for key in inputs if key not in output}
     if missed:
         for key, (ja, en) in list(missed.items())[:30]:
